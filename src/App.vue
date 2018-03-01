@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <my-header/>
- <nav-bar/>
+    <nav-bar/>
   </div>
 </template>
 
@@ -11,7 +11,7 @@
 
   export default {
     components: {
-      MyHeader,NavBar
+      MyHeader, NavBar
     }
   };
 </script>

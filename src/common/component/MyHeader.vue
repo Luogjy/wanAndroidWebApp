@@ -8,14 +8,12 @@
       </span>
       <span class="logo-wrapper">
         <img class="logo" src="../img/logo.png"/>
-      <span class="app-name">玩Android</span>
+        <span class="app-name">玩Android</span>
       </span>
-
       <span class="right-wrapper">
-           <span class="discover">发现</span>
-      <img class="search" src="../img/search.png"/>
+        <span class="discover">发现</span>
+        <img class="search" src="../img/search.png"/>
       </span>
-
     </div>
 
     <!--搜索状态-->
@@ -24,7 +22,6 @@
       <input class="box" ref="query" v-model="query" placeholder="搜索关键词以空格形式隔开"/>
       <img class="search" src="../img/search.png"/>
     </div>
-
   </section>
 </template>
 
@@ -90,10 +87,10 @@
       float: left;
       margin-left: 8px;
       .login {
-        margin-right: 4px;
+        margin-right: 10px;
       }
       .register {
-        margin-left: 4px;
+        margin-left: 10px;
       }
       .user {
         display: none;
@@ -109,7 +106,7 @@
         float: right;
         margin-top: 5px;
         width: 18px;
-        margin-left: 4px;
+        margin-left: 16px;
       }
     }
 
