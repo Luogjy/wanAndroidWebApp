@@ -67,6 +67,9 @@
 
 <style scoped lang="scss">
   .banner-wrapper {
+    .right {
+      display: none;
+    }
     .left {
       .my-swiper {
         .my-slide {
