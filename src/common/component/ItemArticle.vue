@@ -6,9 +6,9 @@
         <img v-show="item.collect" class="collect" src="../img/collected.png">
         <span class="title">{{item.title}}</span>
         <span class="chapter">分类：</span>
-        <span class="chapter-name" @click.prevent="toChapterPage">{{item.chapterName}}</span>
+        <span class="chapter-name" :class="!canOpenChapter?'cannot-open-chapter':''" @click.prevent="toChapterPage">{{item.chapterName}}</span>
         <span class="author">作者：</span>
-        <span class="author-name" @click.prevent="toAuthorPage">{{item.author}}</span>
+        <span class="author-name" :class="!canOpenAuthor?'cannot-open-author':''" @click.prevent="toAuthorPage">{{item.author}}</span>
         <span class="date">{{item.niceDate}}</span>
       </div>
     </a>
@@ -41,15 +41,27 @@
             'zan': 0
           };
         }
+      },
+      canOpenChapter: {
+        type: Boolean,
+        default: true
+      },
+      canOpenAuthor: {
+        type: Boolean,
+        default: true
       }
 
     },
     methods: {
       toChapterPage() {
-        console.log('toChapterPage');
+        if (this.canOpenChapter) {
+          this.$router.push('/technologySystem');
+        }
       },
       toAuthorPage() {
-        console.log('toAuthorPage');
+        if (this.canOpenAuthor) {
+          this.$router.push('/authorPage');
+        }
       }
     },
     name: 'item-article'
@@ -59,6 +71,7 @@
 <style scoped lang="scss">
   @import "../css/constant";
 
+  $textColor: #767676;
   .wrapper {
     box-sizing: border-box;
     width: 100%;
@@ -69,7 +82,7 @@
     .content {
       height: 100px;
       font-size: 12px;
-      color: #767676;
+      color: $textColor;
       box-sizing: border-box;
       background: #ffffff;
       /*水平偏移、垂直偏移、模糊、扩展、颜色*/
@@ -105,6 +118,9 @@
         top: 40px;
         color: $bgColor;
       }
+      .cannot-open-chapter {
+        color: $textColor;
+      }
       .author {
         position: absolute;
         left: 30px;
@@ -115,6 +131,9 @@
         left: 65px;
         top: 60px;
         color: $bgColor;
+      }
+      .cannot-open-author {
+        color: $textColor;
       }
       .date {
         float: right;
