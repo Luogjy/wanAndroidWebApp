@@ -44,12 +44,13 @@
       margin: 0 auto;
       border: 1px solid $bgColor;
       border-radius: 4px;
+      background: $bgColor;
       .item {
         font-size: $fontSize;
         flex-grow: 1;
         text-align: center;
         &.router-link-active span {
-          color: $bgColor;
+          color: #ffffff;
         }
       }
     }

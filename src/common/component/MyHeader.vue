@@ -1,7 +1,7 @@
 <template>
   <section>
     <!--一般状态-->
-    <div v-show="!search" class="default-wrapper">
+    <div v-show="!showSearch" class="default-wrapper">
       <span class="user-wrapper">
         <span class="login">登录</span>|<span class="register">注册</span>
         <span class="user">luogjy</span>

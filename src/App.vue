@@ -67,15 +67,17 @@
     .nav-bar-exit {
       transform: translateY($navBarHeight+$navBarBottom+1);
       transition-property: transform, opacity;
-      transition-duration: 400ms;
-      opacity: 0;
+      transition-duration: 300ms;
+      /*多加一个属性变化会卡顿，暂时不知道为什么*/
+      /*opacity: 0;*/
     }
 
     .nav-bar-enter {
       transform: translateY(0);
       transition-property: transform, opacity;
-      transition-duration: 400ms;
-      opacity: 1;
+      transition-duration: 300ms;
+      /*多加一个属性变化会卡顿，暂时不知道为什么*/
+      /*opacity: 1;*/
     }
 
   }
