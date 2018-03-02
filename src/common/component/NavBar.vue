@@ -34,11 +34,9 @@
 
   .wrapper {
     box-sizing: border-box;
-    position: fixed;
-    bottom: 30px;
     width: 100%;
-    height: 30px;
-    line-height: 30px;
+    height: $navBarHeight;
+    line-height: $navBarHeight;
     .nav-wrapper {
       display: flex;
       flex-direction: row;
