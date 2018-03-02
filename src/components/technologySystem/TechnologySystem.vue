@@ -1,5 +1,5 @@
 <template>
-  <section></section>
+  <section>体系</section>
 </template>
 
 <script>

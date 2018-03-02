@@ -1,10 +1,18 @@
 <template>
   <section class="wrapper">
     <div class="nav-wrapper">
-      <span>首页</span>
-      <span>体系</span>
-      <span>项目</span>
-      <span v-show="collection">收藏</span>
+      <router-link tag="div" class="item" to="/home">
+        <span>首页</span>
+      </router-link>
+      <router-link tag="div" class="item" to="/technologySystem">
+        <span>体系</span>
+      </router-link>
+      <router-link tag="div" class="item" to="/project">
+        <span>项目</span>
+      </router-link>
+      <router-link tag="div" class="item" to="/collection" v-show="showCollection">
+        <span>收藏</span>
+      </router-link>
     </div>
   </section>
 </template>
@@ -12,7 +20,7 @@
 <script>
   export default {
     props: {
-      collection: {
+      showCollection: {
         type: Boolean,
         default: false
       }
@@ -38,10 +46,13 @@
       margin: 0 auto;
       border: 1px solid $bgColor;
       border-radius: 4px;
-      span {
+      .item {
         font-size: $fontSize;
         flex-grow: 1;
         text-align: center;
+        &.router-link-active span {
+          color: $bgColor;
+        }
       }
     }
 

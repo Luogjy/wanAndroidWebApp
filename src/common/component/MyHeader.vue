@@ -17,7 +17,7 @@
     </div>
 
     <!--搜索状态-->
-    <div v-show="search" class="search-wrapper">
+    <div v-show="showSearch" class="search-wrapper">
       <img class="back" src="../img/right.png"/>
       <input class="box" ref="query" v-model="query" placeholder="搜索关键词以空格形式隔开"/>
       <img class="search" src="../img/search.png"/>
@@ -28,7 +28,7 @@
 <script>
   export default {
     props: {
-      search: {
+      showSearch: {
         type: Boolean,
         default: false
       }

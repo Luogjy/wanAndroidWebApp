@@ -1,5 +1,5 @@
 <template>
-  <section></section>
+  <section>收藏</section>
 </template>
 
 <script>
