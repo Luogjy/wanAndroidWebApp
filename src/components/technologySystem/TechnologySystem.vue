@@ -1,29 +1,12 @@
 <template>
   <section class="wrapper">
     <div class="chapter-wrapper">
-      <span class="one-chapter">一级分类</span>
+      <span class="one-chapter">{{selectedChapter.name}}</span>
       <img src="../../common/img/right_blue.png" alt="">
-      <span class="two-chapter">二级分类</span>
+      <span class="two-chapter">{{selectedChapter.children.length?selectedChapter.children[0].name:''}}</span>
     </div>
 
     <div class="article-wrapper">
-      <item-article :can-open-chapter="false"/>
-      <item-article :can-open-chapter="false"/>
-      <item-article :can-open-chapter="false"/>
-      <item-article :can-open-chapter="false"/>
-      <item-article :can-open-chapter="false"/>
-      <item-article :can-open-chapter="false"/>
-      <item-article :can-open-chapter="false"/>
-      <item-article :can-open-chapter="false"/>
-      <item-article :can-open-chapter="false"/>
-      <item-article :can-open-chapter="false"/>
-      <item-article :can-open-chapter="false"/>
-      <item-article :can-open-chapter="false"/>
-      <item-article :can-open-chapter="false"/>
-      <item-article :can-open-chapter="false"/>
-      <item-article :can-open-chapter="false"/>
-      <item-article :can-open-chapter="false"/>
-      <item-article :can-open-chapter="false"/>
       <item-article :can-open-chapter="false"/>
     </div>
 
@@ -33,11 +16,49 @@
 <script>
   import ItemArticle from '../../common/component/ItemArticle';
   import {getTechnologySystem} from './js/technologySystem';
-
   export default {
     data() {
       return {
-        systems: []
+        // 体系结构列表数据
+        systems: [],
+        // 被选择的体系以及其子级
+        selectedChapter: {
+          'children': [
+            {
+              'children': [],
+              'courseId': 13,
+              'id': 60,
+              'name': 'Android Studio相关',
+              'order': 1000,
+              'parentChapterId': 150,
+              'visible': 1
+            },
+            {
+              'children': [],
+              'courseId': 13,
+              'id': 169,
+              'name': 'gradle',
+              'order': 1001,
+              'parentChapterId': 150,
+              'visible': 1
+            },
+            {
+              'children': [],
+              'courseId': 13,
+              'id': 269,
+              'name': '官方发布',
+              'order': 1002,
+              'parentChapterId': 150,
+              'visible': 1
+            }
+          ],
+          'courseId': 13,
+          'id': 150,
+          'name': '开发环境',
+          'order': 1,
+          'parentChapterId': 0,
+          'visible': 1
+        }
       };
     },
     created() {
