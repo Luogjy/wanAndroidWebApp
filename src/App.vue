@@ -2,7 +2,9 @@
   <div id="app">
     <my-header class="my-header"/>
     <article>
-      <router-view/>
+      <keep-alive>
+        <router-view/>
+      </keep-alive>
     </article>
     <nav-bar class="nav-bar" :class="showNavBar"/>
   </div>
@@ -11,6 +13,7 @@
 <script>
   import MyHeader from './common/component/MyHeader';
   import NavBar from './common/component/NavBar';
+  import {mapMutations} from 'vuex';
 
   export default {
     data() {
@@ -32,10 +35,23 @@
     methods: {
       onScroll() {
         let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        // 导航栏的交互
+        this.touchBottomListener(); // 触底监听
+        this.showHideNavBar(scrollTop); // 导航栏的交互
+      },
+      showHideNavBar(scrollTop) {
         this.toShowNavBar = this.preScrollTop > scrollTop;
         this.preScrollTop = scrollTop;
-      }
+      },
+      touchBottomListener() {
+        if (window.pageYOffset + window.innerHeight >= document.documentElement.scrollHeight) { // 滚动高度 + 可视高度 >= 文档高度
+          this.setTouchBottom(true);
+        } else {
+          this.setTouchBottom(false);
+        }
+      },
+      ...mapMutations({
+        setTouchBottom: 'TOUCH_BOTTOM'
+      })
     },
     components: {
       MyHeader, NavBar

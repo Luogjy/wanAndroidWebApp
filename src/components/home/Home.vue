@@ -71,6 +71,12 @@
     created() {
       this._getArticleList();
     },
+    activated() {
+      console.log('activated');
+    },
+    deactivated() {
+      console.log('deactivated');
+    },
     methods: {
       // 获取新闻列表
       _getArticleList() {
