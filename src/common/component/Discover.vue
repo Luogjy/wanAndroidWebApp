@@ -9,7 +9,9 @@
       <li>联系我们</li>
     </ul>
     <div @click.stop="hideDiscover" class="mask-bottom"
-         :class="showDiscover?'mask-bottom-enter':'mask-bottom-exit'"></div>
+         :class="showDiscover?'mask-bottom-enter':'mask-bottom-exit'">
+      <span class="tip">点击关闭列表</span>
+    </div>
   </div>
 </template>
 
@@ -58,6 +60,14 @@
       background: black;
       opacity: .6;
       z-index: 99;
+      .tip {
+        position: fixed;
+        bottom: 150px;
+        left: 50%;
+        transform: translateX(-50%);
+        box-sizing: border-box;
+        color: #ffffff;
+      }
     }
     .mask-bottom-enter {
       display: block;
