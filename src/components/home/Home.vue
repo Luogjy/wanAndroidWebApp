@@ -3,19 +3,9 @@
     <div class="banner-wrapper">
       <div class="left">
         <swiper :options="swiperOption" class="my-swiper">
-          <swiper-slide class="my-slide">
-            <a href="#">
-              <img src="./img/1.png" alt="">
-            </a>
-          </swiper-slide>
-          <swiper-slide class="my-slide">
-            <a href="#">
-              <img src="./img/2.png" alt="">
-            </a>
-          </swiper-slide>
-          <swiper-slide class="my-slide">
-            <a href="#">
-              <img src="./img/3.png" alt="">
+          <swiper-slide class="my-slide" :key="index" v-for="(item,index) in banners">
+            <a :href="item.url">
+              <img :src="item.imagePath" alt="">
             </a>
           </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
@@ -35,7 +25,7 @@
   import 'swiper/dist/css/swiper.css'; // vue-awesome-swiper的样式表
   import {swiper, swiperSlide} from 'vue-awesome-swiper';
   import ItemArticle from '../../common/component/ItemArticle';
-  import {getArticleList} from './js/home';
+  import {getArticleList, getBannerList} from './js/home';
   import {mapGetters, mapMutations} from 'vuex';
 
   export default {
@@ -49,6 +39,7 @@
         isGettingArticleList: false,
         // 刷新文章列表
         isRefresh: false,
+        banners: [],
         // vue-awesome-swiper所有参数都写这里，所有的参数同 swiper 官方 api 参数
         swiperOption: {
           scrollbar: {
@@ -81,6 +72,7 @@
     },
     created() {
       this._getArticleList();
+      this._getBannerList();
     },
     activated() {
       this.pageActivated = true;
@@ -106,6 +98,15 @@
           this.setRefresh(false);
         });
       },
+      _getBannerList() {
+        this.addLoading(1);
+        getBannerList().then((res) => {
+          if (res.errorCode >= 0) {
+            this.banners = res.data;
+          }
+          this.addLoading(-1);
+        });
+      },
       // 初始化数据页码
       initNextPage() {
         this.nextPage = 1;
@@ -129,6 +130,7 @@
           this.isRefresh = true;
           this.initNextPage();
           this._getArticleList();
+          this._getBannerList();
         }
       }
     },
@@ -150,6 +152,7 @@
           .my-slide {
             img {
               width: 100%;
+              min-height: 177px;
             }
           }
         }
