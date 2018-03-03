@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <my-header class="my-header"/>
+    <my-header class="my-header" refreshing=""/>
     <article>
       <keep-alive>
         <router-view/>

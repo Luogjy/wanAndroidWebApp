@@ -88,6 +88,7 @@
       // 获取新闻列表
       _getArticleList() {
         this.isGettingArticleList = true;
+        this.addLoading(1);
         getArticleList(this.nextPage).then((res) => {
           if (res.errorCode >= 0) { // 成功
             if (this.isRefresh) {
@@ -97,6 +98,7 @@
             this.nextPage++;
           }
           this.isGettingArticleList = false;
+          this.addLoading(-1);
           this.setRefresh(false);
         });
       },
@@ -105,7 +107,10 @@
         this.nextPage = 1;
       },
       ...mapMutations({
-        setRefresh: 'REFRESH'
+        // 点击了头部刷新按钮
+        setRefresh: 'REFRESH',
+        // 主动调起的请求任务数，计数器加1或加-1
+        addLoading: 'LOADING'
       })
     },
     watch: {

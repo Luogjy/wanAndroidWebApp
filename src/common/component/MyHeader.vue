@@ -9,7 +9,7 @@
       <span class="logo-wrapper">
         <img class="logo" src="../img/logo.png"/>
         <span class="app-name">玩Android</span>
-        <img class="refresh" src="../img/refresh.png" @click="refresh">
+        <img class="refresh" :class="rotating?'loading':''" src="../img/refresh.png" @click="refresh">
       </span>
       <span class="right-wrapper">
         <span class="discover">发现</span>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import {mapMutations} from 'vuex';
+  import {mapMutations, mapGetters} from 'vuex';
 
   export default {
     props: {
@@ -38,8 +38,12 @@
     },
     data() {
       return {
-        query: ''
+        query: '',
+        rotating: false // 刷新按钮转动
       };
+    },
+    computed: {
+      ...mapGetters(['loading'])
     },
     methods: {
       refresh() {
@@ -48,6 +52,11 @@
       ...mapMutations({
         setRefresh: 'REFRESH'
       })
+    },
+    watch: {
+      loading(newValue, oldValue) {
+        this.rotating = newValue;
+      }
     }
   };
 </script>
@@ -138,6 +147,24 @@
         float: right;
         margin-top: 7px;
         width: 16px;
+
+        animation-name: xiaodan;
+        animation-duration: 1000ms;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-fill-mode: forwards;
+        animation-play-state: paused;
+      }
+      .loading {
+        animation-play-state: running;
+      }
+      @keyframes xiaodan {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
       }
       .app-name {
       }
