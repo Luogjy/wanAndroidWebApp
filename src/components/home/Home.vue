@@ -36,12 +36,15 @@
   import {swiper, swiperSlide} from 'vue-awesome-swiper';
   import ItemArticle from '../../common/component/ItemArticle';
   import {getArticleList} from './js/home';
+  import {mapGetters} from 'vuex';
 
   export default {
     data() {
       return {
         articles: [],
         nextPage: 1,
+        pageActivated: false, // 页面激活
+        isGettingArticleList: false, // 正在获取文章列表
         swiperOption: { // vue-awesome-swiper所有参数都写这里，所有的参数同 swiper 官方 api 参数
           scrollbar: {
             el: '.swiper-scrollbar'
@@ -68,24 +71,37 @@
         }
       };
     },
+    computed: {
+      ...mapGetters(['touchBottom'])
+    },
     created() {
       this._getArticleList();
     },
     activated() {
-      console.log('activated');
+      this.pageActivated = true;
     },
     deactivated() {
-      console.log('deactivated');
+      this.pageActivated = false;
     },
     methods: {
       // 获取新闻列表
       _getArticleList() {
+        this.isGettingArticleList = true;
         getArticleList(this.nextPage).then((res) => {
           if (res.errorCode >= 0) { // 成功
-            this.articles = res.data.datas;
+            this.articles = this.articles.concat(res.data.datas);
+            // this.articles.push(res.data.datas);
             this.nextPage++;
           }
+          this.isGettingArticleList = false;
         });
+      }
+    },
+    watch: {
+      touchBottom(newValue, oldValue) {
+        if (newValue && this.pageActivated && !this.isGettingArticleList) { // 触底加载更多
+          this._getArticleList();
+        }
       }
     },
     components: {
