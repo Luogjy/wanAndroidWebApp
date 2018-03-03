@@ -36,7 +36,7 @@
   import {swiper, swiperSlide} from 'vue-awesome-swiper';
   import ItemArticle from '../../common/component/ItemArticle';
   import {getArticleList} from './js/home';
-  import {mapGetters} from 'vuex';
+  import {mapGetters, mapMutations} from 'vuex';
 
   export default {
     data() {
@@ -45,6 +45,7 @@
         nextPage: 1,
         pageActivated: false, // 页面激活
         isGettingArticleList: false, // 正在获取文章列表
+        isRefresh: false, // 刷新文章列表
         swiperOption: { // vue-awesome-swiper所有参数都写这里，所有的参数同 swiper 官方 api 参数
           scrollbar: {
             el: '.swiper-scrollbar'
@@ -72,7 +73,7 @@
       };
     },
     computed: {
-      ...mapGetters(['touchBottom'])
+      ...mapGetters(['touchBottom', 'refresh'])
     },
     created() {
       this._getArticleList();
@@ -89,17 +90,35 @@
         this.isGettingArticleList = true;
         getArticleList(this.nextPage).then((res) => {
           if (res.errorCode >= 0) { // 成功
+            if (this.isRefresh) {
+              this.articles = [];
+            }
             this.articles = this.articles.concat(res.data.datas);
-            // this.articles.push(res.data.datas);
             this.nextPage++;
           }
           this.isGettingArticleList = false;
+          this.setRefresh(false);
         });
-      }
+      },
+      // 初始化数据页码
+      initNextPage() {
+        this.nextPage = 1;
+      },
+      ...mapMutations({
+        setRefresh: 'REFRESH'
+      })
     },
     watch: {
       touchBottom(newValue, oldValue) {
         if (newValue && this.pageActivated && !this.isGettingArticleList) { // 触底加载更多
+          this.isRefresh = false;
+          this._getArticleList();
+        }
+      },
+      refresh(newValue, olrValue) {
+        if (newValue && this.pageActivated && !this.isGettingArticleList) { // 刷新数据
+          this.isRefresh = true;
+          this.initNextPage();
           this._getArticleList();
         }
       }

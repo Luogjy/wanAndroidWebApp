@@ -9,6 +9,7 @@
       <span class="logo-wrapper">
         <img class="logo" src="../img/logo.png"/>
         <span class="app-name">玩Android</span>
+        <img class="refresh" src="../img/refresh.png" @click="refresh">
       </span>
       <span class="right-wrapper">
         <span class="discover">发现</span>
@@ -26,6 +27,8 @@
 </template>
 
 <script>
+  import {mapMutations} from 'vuex';
+
   export default {
     props: {
       showSearch: {
@@ -37,6 +40,14 @@
       return {
         query: ''
       };
+    },
+    methods: {
+      refresh() {
+        this.setRefresh(true);
+      },
+      ...mapMutations({
+        setRefresh: 'REFRESH'
+      })
     }
   };
 </script>
@@ -112,7 +123,7 @@
 
     .logo-wrapper {
       display: inline-block;
-      width: 84px;
+      width: 98px;
       position: absolute;
       left: 50%;
       top: 50%;
@@ -122,6 +133,11 @@
         float: left;
         margin-top: 7px;
         width: 20px;
+      }
+      .refresh {
+        float: right;
+        margin-top: 7px;
+        width: 16px;
       }
       .app-name {
       }
