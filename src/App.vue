@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <my-header class="my-header" refreshing=""/>
+    <my-header @discover="showDiscoverDialog" class="my-header" refreshing=""/>
+    <discover :show-discover="isShowDiscoverDialog" @hideDiscover="hideDiscoverDialog"/>
     <article>
       <keep-alive>
         <router-view/>
@@ -13,13 +14,15 @@
 <script>
   import MyHeader from './common/component/MyHeader';
   import NavBar from './common/component/NavBar';
+  import Discover from './common/component/Discover';
   import {mapMutations} from 'vuex';
 
   export default {
     data() {
       return {
         preScrollTop: 0,
-        toShowNavBar: true
+        toShowNavBar: true,
+        isShowDiscoverDialog: false
       };
     },
     computed: {
@@ -49,12 +52,18 @@
           this.setTouchBottom(false);
         }
       },
+      showDiscoverDialog() {
+        this.isShowDiscoverDialog = true;
+      },
+      hideDiscoverDialog() {
+        this.isShowDiscoverDialog = false;
+      },
       ...mapMutations({
         setTouchBottom: 'TOUCH_BOTTOM'
       })
     },
     components: {
-      MyHeader, NavBar
+      MyHeader, NavBar, Discover
     }
   };
 </script>

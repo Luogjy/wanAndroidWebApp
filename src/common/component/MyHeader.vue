@@ -12,7 +12,7 @@
         <img class="refresh" :class="rotating?'loading':''" src="../img/refresh.png" @click="refresh">
       </span>
       <span class="right-wrapper">
-        <span class="discover">发现</span>
+        <span @click="discover" class="discover">发现</span>
         <img class="search" src="../img/search.png"/>
       </span>
     </div>
@@ -48,6 +48,9 @@
     methods: {
       refresh() {
         this.setRefresh(true);
+      },
+      discover() {
+        this.$emit('discover');
       },
       ...mapMutations({
         setRefresh: 'REFRESH'
