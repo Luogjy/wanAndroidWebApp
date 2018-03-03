@@ -19,6 +19,9 @@ const mutations = {
    */
   [types.LOADING](state, loading) {
     state.loading = state.loading + loading;
+  },
+  [types.SEARCH_PAGE_IS_SHOWING](state, searchPageIsShowing) {
+    state.searchPageIsShowing = searchPageIsShowing;
   }
 
 };

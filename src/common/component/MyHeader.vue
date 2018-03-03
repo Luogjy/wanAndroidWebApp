@@ -1,7 +1,7 @@
 <template>
   <section>
     <!--一般状态-->
-    <div v-show="!showSearch" class="default-wrapper">
+    <div v-show="!showSearch_" class="default-wrapper">
       <span class="user-wrapper">
         <span class="login">登录</span>|<span class="register">注册</span>
         <span class="user">luogjy</span>
@@ -13,13 +13,13 @@
       </span>
       <span class="right-wrapper">
         <span @click="discover" class="discover">发现</span>
-        <img class="search" src="../img/search.png"/>
+        <img class="search" src="../img/search.png" @click="showSearchBar"/>
       </span>
     </div>
 
     <!--搜索状态-->
-    <div v-show="showSearch" class="search-wrapper">
-      <img class="back" src="../img/right.png"/>
+    <div v-show="showSearch_" class="search-wrapper">
+      <img class="back" src="../img/right.png" @click="hideSearchBar"/>
       <input class="box" ref="query" v-model="query" placeholder="搜索关键词以空格形式隔开"/>
       <img class="search" src="../img/search.png"/>
     </div>
@@ -39,11 +39,14 @@
     data() {
       return {
         query: '',
-        rotating: false // 刷新按钮转动
+        // 刷新按钮转动
+        rotating: false,
+        // 显示搜索框
+        showSearch_: this.showSearch
       };
     },
     computed: {
-      ...mapGetters(['loading'])
+      ...mapGetters(['loading', 'searchPageIsShowing'])
     },
     methods: {
       refresh() {
@@ -52,6 +55,14 @@
       discover() {
         this.$emit('discover');
       },
+      showSearchBar() {
+        this.showSearch_ = true;
+        this.$router.push('/search');
+      },
+      hideSearchBar() {
+        this.showSearch_ = false;
+        this.$router.back();
+      },
       ...mapMutations({
         setRefresh: 'REFRESH'
       })
@@ -59,7 +70,15 @@
     watch: {
       loading(newValue, oldValue) {
         this.rotating = !!newValue;
+      },
+      searchPageIsShowing(newVal, oldVal) {
+        if (!newVal) {
+          this.showSearch_ = false;
+        }
       }
+    },
+    deactivated() {
+      this.showSearch_ = false;
     }
   };
 </script>

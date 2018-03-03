@@ -43,10 +43,14 @@
       return {
         articles: [],
         nextPage: 1,
-        pageActivated: false, // 页面激活
-        isGettingArticleList: false, // 正在获取文章列表
-        isRefresh: false, // 刷新文章列表
-        swiperOption: { // vue-awesome-swiper所有参数都写这里，所有的参数同 swiper 官方 api 参数
+        // 页面激活
+        pageActivated: false,
+        // 正在获取文章列表
+        isGettingArticleList: false,
+        // 刷新文章列表
+        isRefresh: false,
+        // vue-awesome-swiper所有参数都写这里，所有的参数同 swiper 官方 api 参数
+        swiperOption: {
           scrollbar: {
             el: '.swiper-scrollbar'
           },

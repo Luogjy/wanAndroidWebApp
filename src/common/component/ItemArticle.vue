@@ -60,7 +60,7 @@
       },
       toAuthorPage() {
         if (this.canOpenAuthor) {
-          this.$router.push('/authorPage');
+          this.$router.push('/author');
         }
       }
     },

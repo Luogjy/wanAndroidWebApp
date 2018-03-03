@@ -4,7 +4,8 @@ import Home from '../components/home/Home';
 import TechnologySystem from '../components/technologySystem/technologySystem';
 import Project from '../components/project/Project';
 import Collection from '../components/collection/Collection';
-import AuthorPage from '../components/authorPage/AuthorPage';
+import Author from '../components/author/author';
+import Search from '../components/search/search';
 
 Vue.use(Router);
 
@@ -31,8 +32,12 @@ export default new Router({
       component: Collection
     },
     {
-      path: '/authorPage',
-      component: AuthorPage
+      path: '/author',
+      component: Author
+    },
+    {
+      path: '/search',
+      component: Search
     }
   ]
 });
