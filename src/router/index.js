@@ -33,6 +33,6 @@ export default new Router({
     {
       path: '/authorPage',
       component: AuthorPage
-    },
+    }
   ]
 });
