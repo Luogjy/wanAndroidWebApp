@@ -32,8 +32,27 @@
 
 <script>
   import ItemArticle from '../../common/component/ItemArticle';
+  import {getTechnologySystem} from './js/technologySystem';
 
   export default {
+    data() {
+      return {
+        systems: []
+      };
+    },
+    created() {
+      this._getTechnologySystem();
+    },
+    methods: {
+      _getTechnologySystem() {
+        getTechnologySystem().then((res) => {
+          if (res.errorCode >= 0) {
+            this.systems = res.data;
+            console.log(this.systems);
+          }
+        });
+      }
+    },
     components: {
       ItemArticle
     }

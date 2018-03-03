@@ -1,6 +1,4 @@
-// import jsonp from '../../../common/js/jsonp';
 import {baseUrl, debug} from '../../../common/js/constant';
-// import 'whatwg-fetch';
 import axios from 'axios';
 
 /**
@@ -20,7 +18,7 @@ export function getArticleList(currentPage) {
 export function getBannerList() {
   const url = debug ? '/api/getBannerList' : '待定';
   return axios.get(url, {
-    params: {url: 'http://www.wanandroid.com/banner/json'}
+    params: {url: `${baseUrl}banner/json`}
   }).then((res) => {
     return Promise.resolve(res.data);
   });
