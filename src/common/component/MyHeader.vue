@@ -55,7 +55,7 @@
     },
     watch: {
       loading(newValue, oldValue) {
-        this.rotating = newValue;
+        this.rotating = !!newValue;
       }
     }
   };
