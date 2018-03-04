@@ -62,6 +62,17 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         });
       });
 
+      app.get('/api/getArticleListByTechnologySystem', function (req, res) {
+        const url = req.query.url;
+        axios.get(url, {
+          headers: {},
+        }).then((response) => {
+          res.json(response.data);
+        }, (err) => {
+        }).catch((e) => {
+          console.log(e);
+        });
+      });
     },
     clientLogLevel: 'warning',
     historyApiFallback: {

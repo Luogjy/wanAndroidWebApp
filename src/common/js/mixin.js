@@ -27,7 +27,7 @@ export const baseFunction = { // 【使用mixins】【1】
       throw new Error('必须在methods重写_touchBottom函数，实现触底加载更多'); // 要求此函数必须重写，否则抛异常
     },
     // 点击了头部刷新按钮刷新页面数据
-    _refresh(newValue, olrValue) {
+    _clickRefreshButton(newValue, olrValue) {
       throw new Error('必须在methods重写_refresh函数，实现点击了头部刷新按钮刷新页面数据');
     },
     // 初始化数据页码
@@ -48,7 +48,7 @@ export const baseFunction = { // 【使用mixins】【1】
     },
     // 刷新页面数据
     refresh(newValue, oldValue) {
-      this._refresh(newValue, oldValue);
+      this._clickRefreshButton(newValue, oldValue);
     }
   }
 };

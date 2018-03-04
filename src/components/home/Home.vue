@@ -102,7 +102,7 @@
           this._getArticleList();
         }
       },
-      _refresh(newValue, oldValue) {
+      _clickRefreshButton(newValue, oldValue) {
         if (newValue && this.pageActivated && !this.isGettingList) { // 刷新页面数据
           this.isRefresh = true;
           this.initNextPage();

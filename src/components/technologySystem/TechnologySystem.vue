@@ -7,7 +7,7 @@
     </div>
 
     <div class="article-wrapper">
-      <item-article :can-open-chapter="false"/>
+      <item-article :can-open-chapter="false" :item="item" :key="index" v-for="(item,index) in articles"/>
     </div>
 
     <flow-dialog :show-dialog="toShowFlowDialog" @hideDialog="hideFlowDialog" @selectedItem="selectedItemByFlowDialog"
@@ -17,10 +17,12 @@
 
 <script>
   import ItemArticle from '../../common/component/ItemArticle';
-  import {getTechnologySystem} from './js/technologySystem';
+  import {getTechnologySystem, getArticleList} from './js/technologySystem';
   import FlowDialog from '../../common/component/FlowDialog';
+  import {baseFunction} from '../../common/js/mixin';
 
   export default {
+    mixins: [baseFunction],
     data() {
       return {
         flowItems: [],
@@ -28,41 +30,21 @@
         systems: [],
         // 被选择的一级分类
         selectedOneChapter: {
-          'children': [
-            {
-              'children': [],
-              'courseId': 13,
-              'id': 60,
-              'name': 'Android Studio相关',
-              'order': 1000,
-              'parentChapterId': 150,
-              'visible': 1
-            }
-          ],
-          position: -1,
-          'courseId': 13,
-          'id': 150,
-          'name': '开发环境',
-          'order': 1,
-          'parentChapterId': 0,
-          'visible': 1
+          // 自己在父级的位置
+          position: -1
         },
         // 被选择的二级分类
         selectedTwoChapter: {
-          position: -1,
-          'courseId': 13,
-          'id': 60,
-          'name': 'Android Studio相关',
-          'order': 1000,
-          'parentChapterId': 150,
-          'visible': 1
+          // 自己在父级的位置
+          position: -1
         },
         toShowFlowDialog: false,
         // 选择类型：1为选择一级分类，2为选择二级分类，-1为没有要选择的
         selectType: -1,
         // 自动隐藏FlowDialog
         autoHideFlowDialog: true,
-        flowDialogTitle: ''
+        flowDialogTitle: '',
+        articles: []
       };
     },
     created() {
@@ -79,10 +61,29 @@
               if (this.selectedOneChapter.children.length > 0) {
                 this.selectedTwoChapter = this.selectedOneChapter.children[0];
                 this.selectedTwoChapter.position = 0;
+                this._getArticleList();
               }
             }
           }
         });
+      },
+      _getArticleList() {
+        if (this.selectedTwoChapter.id) {
+          this.isGettingList = true;
+          this.addLoading(1);
+          getArticleList(this.nextPage, this.selectedTwoChapter.id).then((res) => {
+            if (res.errorCode >= 0) { // 成功
+              if (this.isRefresh) {
+                this.articles = [];
+              }
+              this.articles = this.articles.concat(res.data.datas);
+              this.nextPage++;
+            }
+            this.isGettingList = false;
+            this.addLoading(-1);
+            this.setRefresh(false);
+          });
+        }
       },
       showFlowDialog() {
         this.toShowFlowDialog = true;
@@ -104,7 +105,7 @@
       },
       /**
        * 去选择二级分类
-       * @param resetPos 是否需要重置二级分类被则的位置
+       * @param resetPos 是否需要重置已被选择的二级分类
        */
       _toSelectTwoChapter(resetPos = false) {
         this.selectType = 2;
@@ -114,9 +115,12 @@
           if (this.flowItems.length > 0) {
             this.selectedTwoChapter = JSON.parse(JSON.stringify(this.flowItems[0]));
             this.selectedTwoChapter.position = 0;
+            this.refreshArticleList();
           } else {
             this.selectedTwoChapter = {};
             this.selectedTwoChapter.position = -1;
+            this.initNextPage();
+            this.articles = [];
           }
         }
         this.flowItems.selectedPosition = this.selectedTwoChapter.position;
@@ -129,18 +133,38 @@
       // 从FlowDialog选择到的item
       selectedItemByFlowDialog({item, index}) {
         if (this.selectType === 1) {
-          let resetPos = !(item.id === this.selectedOneChapter.id);
+          let resetPos = item.id !== this.selectedOneChapter.id;
           this.selectedOneChapter = JSON.parse(JSON.stringify(item));
           this.selectedOneChapter.position = index;
           this._toSelectTwoChapter(resetPos);
         } else if (this.selectType === 2) {
+          let differ = item.id !== this.selectedTwoChapter.id;
           this.selectedTwoChapter = JSON.parse(JSON.stringify(item));
           this.selectedTwoChapter.position = index;
+          if (differ) {
+            this.refreshArticleList();
+          }
         } else {
           this.selectType = -1;
           this.flowDialogTitle = '';
           this.flowItems = [];
           this.autoHideFlowDialog = true;
+        }
+      },
+      refreshArticleList() {
+        this.isRefresh = true;
+        this.initNextPage();
+        this._getArticleList();
+      },
+      _touchBottom(newValue, oldValue) {
+        if (newValue && this.pageActivated && !this.isGettingList) { // 触底加载更多
+          this.isRefresh = false;
+          this._getArticleList();
+        }
+      },
+      _clickRefreshButton(newValue, oldValue) {
+        if (newValue && this.pageActivated && !this.isGettingList) { // 刷新页面数据
+          this.refreshArticleList();
         }
       }
     },
