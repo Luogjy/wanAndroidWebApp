@@ -1,28 +1,33 @@
 <template>
   <section class="wrapper">
     <div class="chapter-wrapper">
-      <span class="one-chapter">{{selectedChapter.name}}</span>
+      <span @click="toSelectOneChapter" class="one-chapter">{{selectedOneChapter.name}}</span>
       <img src="../../common/img/right_blue.png" alt="">
-      <span class="two-chapter">{{selectedChapter.children.length?selectedChapter.children[0].name:''}}</span>
+      <span @click="toSelectTwoChapter" class="two-chapter">{{selectedTwoChapter.name}}</span>
     </div>
 
     <div class="article-wrapper">
       <item-article :can-open-chapter="false"/>
     </div>
 
+    <flow-dialog :show-dialog="toShowFlowDialog" @hideDialog="hideFlowDialog" @selectedItem="selectedItemByFlowDialog"
+                 :items="flowItems" :auto-hide="autoHideFlowDialog" :title="flowDialogTitle"/>
   </section>
 </template>
 
 <script>
   import ItemArticle from '../../common/component/ItemArticle';
   import {getTechnologySystem} from './js/technologySystem';
+  import FlowDialog from '../../common/component/FlowDialog';
+
   export default {
     data() {
       return {
+        flowItems: [],
         // 体系结构列表数据
         systems: [],
-        // 被选择的体系以及其子级
-        selectedChapter: {
+        // 被选择的一级分类
+        selectedOneChapter: {
           'children': [
             {
               'children': [],
@@ -32,33 +37,32 @@
               'order': 1000,
               'parentChapterId': 150,
               'visible': 1
-            },
-            {
-              'children': [],
-              'courseId': 13,
-              'id': 169,
-              'name': 'gradle',
-              'order': 1001,
-              'parentChapterId': 150,
-              'visible': 1
-            },
-            {
-              'children': [],
-              'courseId': 13,
-              'id': 269,
-              'name': '官方发布',
-              'order': 1002,
-              'parentChapterId': 150,
-              'visible': 1
             }
           ],
+          position: -1,
           'courseId': 13,
           'id': 150,
           'name': '开发环境',
           'order': 1,
           'parentChapterId': 0,
           'visible': 1
-        }
+        },
+        // 被选择的二级分类
+        selectedTwoChapter: {
+          position: -1,
+          'courseId': 13,
+          'id': 60,
+          'name': 'Android Studio相关',
+          'order': 1000,
+          'parentChapterId': 150,
+          'visible': 1
+        },
+        toShowFlowDialog: false,
+        // 选择类型：1为选择一级分类，2为选择二级分类，-1为没有要选择的
+        selectType: -1,
+        // 自动隐藏FlowDialog
+        autoHideFlowDialog: true,
+        flowDialogTitle: ''
       };
     },
     created() {
@@ -69,13 +73,58 @@
         getTechnologySystem().then((res) => {
           if (res.errorCode >= 0) {
             this.systems = res.data;
-            console.log(this.systems);
+            if (this.systems.length > 0) {
+              this.selectedOneChapter = JSON.parse(JSON.stringify(this.systems[0]));
+              this.selectedOneChapter.position = 0;
+              if (this.selectedOneChapter.children.length > 0) {
+                this.selectedTwoChapter = this.selectedOneChapter.children[0];
+                this.selectedTwoChapter.position = 0;
+              }
+            }
           }
         });
+      },
+      showFlowDialog() {
+        this.toShowFlowDialog = true;
+      },
+      hideFlowDialog() {
+        this.toShowFlowDialog = false;
+      },
+      // 去选择一级分类
+      toSelectOneChapter() {
+        this.selectType = 1;
+        this.flowDialogTitle = '选择一级分类';
+        this.flowItems = this.systems;
+        this.autoHideFlowDialog = false;
+        this.showFlowDialog();
+      },
+      // 去选择二级分类
+      toSelectTwoChapter() {
+        this.selectType = 2;
+        this.flowDialogTitle = '选择二级分类';
+        this.flowItems = this.selectedOneChapter.children;
+        this.autoHideFlowDialog = true;
+        this.showFlowDialog();
+      },
+      // 从FlowDialog选择到的item
+      selectedItemByFlowDialog({item, index}) {
+        if (this.selectType === 1) {
+          this.selectedOneChapter = JSON.parse(JSON.stringify(item));
+          this.selectedOneChapter.position = index;
+          this.toSelectTwoChapter();
+        } else if (this.selectType === 2) {
+          this.selectedTwoChapter = JSON.parse(JSON.stringify(item));
+          this.selectedTwoChapter.position = index;
+        } else {
+          this.selectType = -1;
+          this.flowDialogTitle = '';
+          this.flowItems = [];
+          this.autoHideFlowDialog = true;
+        }
       }
     },
     components: {
-      ItemArticle
+      ItemArticle, FlowDialog
     }
   };
 </script>

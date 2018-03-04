@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div @click.stop="hideDiscover" class="maskTop" :class="showDiscover?'maskTop-enter':'maskTop-exit'"></div>
-    <ul @click.stop="hideDiscover" class="item-wrapper item-wrapper-enter"
+    <ul @click.stop="hideDiscover" class="item-wrapper"
         :class="showDiscover?'item-wrapper-enter':'item-wrapper-exit'">
       <li>导航</li>
       <li>工具</li>
@@ -19,7 +19,7 @@
   export default {
     props: {
       showDiscover: {
-        type: true,
+        type: Boolean,
         default: false
       }
     },
@@ -102,7 +102,7 @@
       backface-visibility: hidden; /*元素旋转时隐藏背面*/
       transform-style: preserve-3d; /*保留3D空间*/
     }
-    height: 0;
+
     .item-wrapper-exit {
       transition-property: height, opacity;
       transition-duration: 300ms;
