@@ -10,7 +10,8 @@
       <item-article :can-open-chapter="false" :item="item" :key="index" v-for="(item,index) in articles"/>
     </div>
 
-    <flow-dialog :show-dialog="toShowFlowDialog" @hideDialog="hideFlowDialog" @selectedItem="selectedItemByFlowDialog"
+    <flow-dialog :show-dialog="toShowFlowDialog" @userHideDialog="userHideFlowDialog" @hideDialog="hideFlowDialog"
+                 @selectedItem="selectedItemByFlowDialog"
                  :items="flowItems" :auto-hide="autoHideFlowDialog" :title="flowDialogTitle"/>
   </section>
 </template>
@@ -45,7 +46,9 @@
         autoHideFlowDialog: true,
         flowDialogTitle: '',
         articles: [],
-        resetSelectedTwoChapterPosition: false
+        resetSelectedTwoChapterPosition: false,
+        // 打开FlowDialog选择一级分类后，用户什么都没选又关闭了隐藏FlowDialog
+        isUserHideFlowDialog: false
       };
     },
     created() {
@@ -89,8 +92,12 @@
       showFlowDialog() {
         this.toShowFlowDialog = true;
       },
-      hideFlowDialog({item, index}) {
+      hideFlowDialog() {
         this.toShowFlowDialog = false;
+      },
+      userHideFlowDialog({item, index}) {
+        this.toShowFlowDialog = false;
+        this.isUserHideFlowDialog = true;
         this._selectedItemByFlowDialog({item, index});
       },
       // 去选择一级分类
@@ -100,6 +107,7 @@
         this.flowItems = this.systems;
         this.flowItems.selectedPosition = this.selectedOneChapter.position;
         this.autoHideFlowDialog = false;
+        this.isUserHideFlowDialog = false;
         this.showFlowDialog();
       },
       toSelectOneChapter() {
@@ -134,7 +142,9 @@
           this.resetSelectedTwoChapterPosition = item.id !== this.selectedOneChapter.id; // 跟上一次选择的一级分类不是同一个就要重选二级分类
           this.selectedOneChapter = JSON.parse(JSON.stringify(item));
           this.selectedOneChapter.position = index;
-          this._toSelectTwoChapter();
+          if (!this.isUserHideFlowDialog) { // 用户不是打开对话框不选择就关闭
+            this._toSelectTwoChapter(); // 进行二级分类选择
+          }
         } else if (this.selectType === 2) {
           let differ = item.id !== this.selectedTwoChapter.id;
           this.selectedTwoChapter = JSON.parse(JSON.stringify(item));

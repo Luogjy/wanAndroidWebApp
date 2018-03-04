@@ -3,7 +3,7 @@
     <div class="dialog" :class="showDialog?'dialog-enter':'dialog-exit'">
       <div class="title">
         <span>{{title}}</span>
-        <div @click.stop="hideDialog">
+        <div @click.stop="userHideDialog">
           <img src="../img/close.png" alt="">
         </div>
       </div>
@@ -15,7 +15,7 @@
       </ul>
     </div>
 
-    <div @click.stop="hideDialog" class="mask"
+    <div @click.stop="userHideDialog" class="mask"
          :class="showDialog?'mask-enter':'mask-exit'">
     </div>
   </div>
@@ -37,7 +37,7 @@
           }];
         }
       },
-      // 自动隐藏对话框
+      // 选择条目以后自动隐藏对话框
       autoHide: {
         type: Boolean,
         default: true
@@ -48,15 +48,16 @@
       }
     },
     methods: {
-      hideDialog() {
-        this.$emit('hideDialog', {
+      // 用户主动隐藏对话框
+      userHideDialog() {
+        this.$emit('userHideDialog', {
           'item': this.items[this.items.selectedPosition],
           'index': this.items.selectedPosition
         });
       },
       selectedItem({item, index}) {
         if (this.autoHide) {
-          this.hideDialog();
+          this.$emit('hideDialog');
         }
         this.$emit('selectedItem', {item, index});
       }
