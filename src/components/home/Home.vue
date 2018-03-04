@@ -26,19 +26,13 @@
   import {swiper, swiperSlide} from 'vue-awesome-swiper';
   import ItemArticle from '../../common/component/ItemArticle';
   import {getArticleList, getBannerList} from './js/home';
-  import {mapGetters, mapMutations} from 'vuex';
+  import {baseFunction} from '../../common/js/mixin'; // 【使用mixins】【2】 引入mixin
 
   export default {
+    mixins: [baseFunction], // 【使用mixins】【3】 使用mixin
     data() {
       return {
         articles: [],
-        nextPage: 1,
-        // 页面激活
-        pageActivated: false,
-        // 正在获取文章列表
-        isGettingArticleList: false,
-        // 刷新文章列表
-        isRefresh: false,
         banners: [],
         // vue-awesome-swiper所有参数都写这里，所有的参数同 swiper 官方 api 参数
         swiperOption: {
@@ -67,23 +61,13 @@
         }
       };
     },
-    computed: {
-      ...mapGetters(['touchBottom', 'refresh'])
-    },
     created() {
-      this._getArticleList();
-      this._getBannerList();
-    },
-    activated() {
-      this.pageActivated = true;
-    },
-    deactivated() {
-      this.pageActivated = false;
+      this._getPageData();
     },
     methods: {
       // 获取新闻列表
       _getArticleList() {
-        this.isGettingArticleList = true;
+        this.isGettingList = true;
         this.addLoading(1);
         getArticleList(this.nextPage).then((res) => {
           if (res.errorCode >= 0) { // 成功
@@ -93,7 +77,7 @@
             this.articles = this.articles.concat(res.data.datas);
             this.nextPage++;
           }
-          this.isGettingArticleList = false;
+          this.isGettingList = false;
           this.addLoading(-1);
           this.setRefresh(false);
         });
@@ -107,30 +91,22 @@
           this.addLoading(-1);
         });
       },
-      // 初始化数据页码
-      initNextPage() {
-        this.nextPage = 1;
+      // 获取整页数据
+      _getPageData() {
+        this._getArticleList();
+        this._getBannerList();
       },
-      ...mapMutations({
-        // 点击了头部刷新按钮
-        setRefresh: 'REFRESH',
-        // 主动调起的请求任务数，计数器加1或加-1
-        addLoading: 'LOADING'
-      })
-    },
-    watch: {
-      touchBottom(newValue, oldValue) {
-        if (newValue && this.pageActivated && !this.isGettingArticleList) { // 触底加载更多
+      _touchBottom(newValue, oldValue) {
+        if (newValue && this.pageActivated && !this.isGettingList) { // 触底加载更多
           this.isRefresh = false;
           this._getArticleList();
         }
       },
-      refresh(newValue, olrValue) {
-        if (newValue && this.pageActivated && !this.isGettingArticleList) { // 刷新数据
+      _refresh(newValue, oldValue) {
+        if (newValue && this.pageActivated && !this.isGettingList) { // 刷新页面数据
           this.isRefresh = true;
           this.initNextPage();
-          this._getArticleList();
-          this._getBannerList();
+          this._getPageData();
         }
       }
     },
