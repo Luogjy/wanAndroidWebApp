@@ -44,7 +44,8 @@
         // 自动隐藏FlowDialog
         autoHideFlowDialog: true,
         flowDialogTitle: '',
-        articles: []
+        articles: [],
+        resetSelectedTwoChapterPosition: false
       };
     },
     created() {
@@ -88,8 +89,9 @@
       showFlowDialog() {
         this.toShowFlowDialog = true;
       },
-      hideFlowDialog() {
+      hideFlowDialog({item, index}) {
         this.toShowFlowDialog = false;
+        this._selectedItemByFlowDialog({item, index});
       },
       // 去选择一级分类
       _toSelectOneChapter() {
@@ -107,20 +109,17 @@
        * 去选择二级分类
        * @param resetPos 是否需要重置已被选择的二级分类
        */
-      _toSelectTwoChapter(resetPos = false) {
+      _toSelectTwoChapter() {
         this.selectType = 2;
         this.flowDialogTitle = '选择二级分类';
         this.flowItems = this.selectedOneChapter.children;
-        if (resetPos) {
+        if (this.resetSelectedTwoChapterPosition) {
           if (this.flowItems.length > 0) {
             this.selectedTwoChapter = JSON.parse(JSON.stringify(this.flowItems[0]));
             this.selectedTwoChapter.position = 0;
-            this.refreshArticleList();
           } else {
             this.selectedTwoChapter = {};
             this.selectedTwoChapter.position = -1;
-            this.initNextPage();
-            this.articles = [];
           }
         }
         this.flowItems.selectedPosition = this.selectedTwoChapter.position;
@@ -130,18 +129,17 @@
       toSelectTwoChapter() {
         this._toSelectTwoChapter();
       },
-      // 从FlowDialog选择到的item
-      selectedItemByFlowDialog({item, index}) {
+      _selectedItemByFlowDialog({item, index}) {
         if (this.selectType === 1) {
-          let resetPos = item.id !== this.selectedOneChapter.id;
+          this.resetSelectedTwoChapterPosition = item.id !== this.selectedOneChapter.id; // 跟上一次选择的一级分类不是同一个就要重选二级分类
           this.selectedOneChapter = JSON.parse(JSON.stringify(item));
           this.selectedOneChapter.position = index;
-          this._toSelectTwoChapter(resetPos);
+          this._toSelectTwoChapter();
         } else if (this.selectType === 2) {
           let differ = item.id !== this.selectedTwoChapter.id;
           this.selectedTwoChapter = JSON.parse(JSON.stringify(item));
           this.selectedTwoChapter.position = index;
-          if (differ) {
+          if (differ || this.resetSelectedTwoChapterPosition) {
             this.refreshArticleList();
           }
         } else {
@@ -150,6 +148,10 @@
           this.flowItems = [];
           this.autoHideFlowDialog = true;
         }
+      },
+      // 从FlowDialog选择到的item
+      selectedItemByFlowDialog({item, index}) {
+        this._selectedItemByFlowDialog({item, index});
       },
       refreshArticleList() {
         this.isRefresh = true;

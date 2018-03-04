@@ -49,7 +49,10 @@
     },
     methods: {
       hideDialog() {
-        this.$emit('hideDialog');
+        this.$emit('hideDialog', {
+          'item': this.items[this.items.selectedPosition],
+          'index': this.items.selectedPosition
+        });
       },
       selectedItem({item, index}) {
         if (this.autoHide) {
