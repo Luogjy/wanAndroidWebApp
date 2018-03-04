@@ -91,27 +91,48 @@
         this.toShowFlowDialog = false;
       },
       // 去选择一级分类
-      toSelectOneChapter() {
+      _toSelectOneChapter() {
         this.selectType = 1;
         this.flowDialogTitle = '选择一级分类';
         this.flowItems = this.systems;
+        this.flowItems.selectedPosition = this.selectedOneChapter.position;
         this.autoHideFlowDialog = false;
         this.showFlowDialog();
       },
-      // 去选择二级分类
-      toSelectTwoChapter() {
+      toSelectOneChapter() {
+        this._toSelectOneChapter();
+      },
+      /**
+       * 去选择二级分类
+       * @param resetPos 是否需要重置二级分类被则的位置
+       */
+      _toSelectTwoChapter(resetPos = false) {
         this.selectType = 2;
         this.flowDialogTitle = '选择二级分类';
         this.flowItems = this.selectedOneChapter.children;
+        if (resetPos) {
+          if (this.flowItems.length > 0) {
+            this.selectedTwoChapter = JSON.parse(JSON.stringify(this.flowItems[0]));
+            this.selectedTwoChapter.position = 0;
+          } else {
+            this.selectedTwoChapter = {};
+            this.selectedTwoChapter.position = -1;
+          }
+        }
+        this.flowItems.selectedPosition = this.selectedTwoChapter.position;
         this.autoHideFlowDialog = true;
         this.showFlowDialog();
+      },
+      toSelectTwoChapter() {
+        this._toSelectTwoChapter();
       },
       // 从FlowDialog选择到的item
       selectedItemByFlowDialog({item, index}) {
         if (this.selectType === 1) {
+          let resetPos = !(item.id === this.selectedOneChapter.id);
           this.selectedOneChapter = JSON.parse(JSON.stringify(item));
           this.selectedOneChapter.position = index;
-          this.toSelectTwoChapter();
+          this._toSelectTwoChapter(resetPos);
         } else if (this.selectType === 2) {
           this.selectedTwoChapter = JSON.parse(JSON.stringify(item));
           this.selectedTwoChapter.position = index;

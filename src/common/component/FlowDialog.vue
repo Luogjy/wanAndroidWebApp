@@ -8,8 +8,9 @@
         </div>
       </div>
       <ul class="item-wrapper">
-        <li @click.stop="selectedItem({item,index})" :key="index" v-for="(item,index) in items">
-          <span>{{item.name}}</span>
+        <li @click.stop="selectedItem({item,index})" :key="index" v-for="(item,index) in items"
+            :class="items.selectedPosition===index?'selected':''">
+          {{item.name}}
         </li>
       </ul>
     </div>
@@ -123,6 +124,10 @@
           padding-right: 5px;
           text-align: center;
           margin: 3px 3px;
+        }
+        .selected {
+          border: 1px solid $bgColor;
+          border-radius: 2px;
         }
       }
     }
