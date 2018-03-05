@@ -1,11 +1,12 @@
 <template>
   <section class="wrapper">
+    <toast :show-option="toastOption"/>
     <div class="chapter-wrapper">
       <span class="tip">选择分类：</span>
       <span class="chapter" @click="toSelectChapter">{{selectedChapter.name}}</span>
     </div>
 
-    <div class="list-wrapper">
+    <div ref="listWrapper" class="list-wrapper">
       <item-project :key="index" :item="item" v-for="(item,index) in projects"/>
     </div>
 
@@ -20,6 +21,7 @@
   import ItemProject from '../../common/component/ItemProject';
   import {getProjectTree, getProjectList} from './js/project';
   import {baseFunction} from '../../common/js/mixin';
+  import Toast from '../../common/component/Toast';
 
   export default {
     mixins: [baseFunction],
@@ -48,13 +50,26 @@
         projects: [],
         toShowFlowDialog: false,
         flowItems: [],
-        flowDialogTitle: ''
+        flowDialogTitle: '',
+        listWrapperOriginalTop: 0,
+        toastOption: {
+          text: '',
+          top: 0
+        }
       };
     },
     created() {
       this._getProjectTree();
     },
+    mounted() {
+      this.listWrapperOriginalTop = this.$refs.listWrapper.getBoundingClientRect().top;
+    },
     methods: {
+      showToast({text, top}) {
+        this.toastOption = {
+          text, top
+        };
+      },
       _getProjectList() {
         this.isGettingList = true;
         this.addLoading(1);
@@ -65,6 +80,7 @@
             }
             this.projects = this.projects.concat(res.data.datas);
             this.nextPage++;
+            this.showToast({text: '获取数据成功', top: this.listWrapperOriginalTop});
           }
           this.isGettingList = false;
           this.addLoading(-1);
@@ -133,7 +149,7 @@
       }
     },
     components: {
-      ItemProject, FlowDialog
+      ItemProject, FlowDialog, Toast
     }
   };
 </script>
@@ -142,6 +158,7 @@
   @import "../../common/css/constant";
 
   $chapterWrapperHeight: 30px;
+
   .wrapper {
     position: relative;
     .chapter-wrapper {
