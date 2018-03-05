@@ -1,12 +1,13 @@
 <template>
   <section class="wrapper">
+    <toast :show-option="toastOption"/>
     <div class="chapter-wrapper">
       <span @click="toSelectOneChapter" class="one-chapter">{{selectedOneChapter.name}}</span>
       <img src="../../common/img/right_blue.png" alt="">
       <span @click="toSelectTwoChapter" class="two-chapter">{{selectedTwoChapter.name}}</span>
     </div>
 
-    <div class="article-wrapper">
+    <div ref="articleWrapper" class="article-wrapper">
       <item-article :can-open-chapter="false" :item="item" :key="index" v-for="(item,index) in articles"/>
     </div>
 
@@ -54,6 +55,9 @@
     created() {
       this._getTechnologySystem();
     },
+    mounted() {
+      this.initToastTop(this.$refs.articleWrapper.getBoundingClientRect().top);
+    },
     methods: {
       _getTechnologySystem() {
         getTechnologySystem().then((res) => {
@@ -82,6 +86,7 @@
               }
               this.articles = this.articles.concat(res.data.datas);
               this.nextPage++;
+              this.showToast({text: '获取数据成功'});
             }
             this.isGettingList = false;
             this.addLoading(-1);

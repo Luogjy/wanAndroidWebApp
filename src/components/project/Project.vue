@@ -21,7 +21,6 @@
   import ItemProject from '../../common/component/ItemProject';
   import {getProjectTree, getProjectList} from './js/project';
   import {baseFunction} from '../../common/js/mixin';
-  import Toast from '../../common/component/Toast';
 
   export default {
     mixins: [baseFunction],
@@ -50,26 +49,16 @@
         projects: [],
         toShowFlowDialog: false,
         flowItems: [],
-        flowDialogTitle: '',
-        listWrapperOriginalTop: 0,
-        toastOption: {
-          text: '',
-          top: 0
-        }
+        flowDialogTitle: ''
       };
     },
     created() {
       this._getProjectTree();
     },
     mounted() {
-      this.listWrapperOriginalTop = this.$refs.listWrapper.getBoundingClientRect().top;
+      this.initToastTop(this.$refs.listWrapper.getBoundingClientRect().top);
     },
     methods: {
-      showToast({text, top}) {
-        this.toastOption = {
-          text, top
-        };
-      },
       _getProjectList() {
         this.isGettingList = true;
         this.addLoading(1);
@@ -80,7 +69,7 @@
             }
             this.projects = this.projects.concat(res.data.datas);
             this.nextPage++;
-            this.showToast({text: '获取数据成功', top: this.listWrapperOriginalTop});
+            this.showToast({text: '获取数据成功'});
           }
           this.isGettingList = false;
           this.addLoading(-1);
@@ -149,7 +138,7 @@
       }
     },
     components: {
-      ItemProject, FlowDialog, Toast
+      ItemProject, FlowDialog
     }
   };
 </script>

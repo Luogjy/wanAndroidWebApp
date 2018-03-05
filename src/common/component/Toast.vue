@@ -39,7 +39,7 @@
         clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
           this.toastText = '';
-        }, 1500);
+        }, 1200);
       }
     }
   };

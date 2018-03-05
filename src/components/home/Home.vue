@@ -1,6 +1,8 @@
 <template>
   <section class="wrapper">
-    <div class="banner-wrapper">
+    <!--使用Toast组件【2】-->
+    <toast :show-option="toastOption"/>
+    <div ref="bannerWrapper" class="banner-wrapper">
       <div class="left">
         <swiper :options="swiperOption" class="my-swiper">
           <swiper-slide class="my-slide" :key="index" v-for="(item,index) in banners">
@@ -29,7 +31,7 @@
   import {baseFunction} from '../../common/js/mixin'; // 【使用mixins】【2】 引入mixin
 
   export default {
-    mixins: [baseFunction], // 【使用mixins】【3】 使用mixin
+    mixins: [baseFunction], // 【使用mixins】【3】 使用mixin // 使用Toast组件【1】
     data() {
       return {
         articles: [],
@@ -64,6 +66,10 @@
     created() {
       this._getPageData();
     },
+    mounted() {
+      // 使用Toast组件【3】
+      this.initToastTop(this.$refs.bannerWrapper.getBoundingClientRect().top);
+    },
     methods: {
       // 获取新闻列表
       _getArticleList() {
@@ -76,6 +82,7 @@
             }
             this.articles = this.articles.concat(res.data.datas);
             this.nextPage++;
+            this.showToast({text: '获取数据成功'}); // 使用Toast组件【4】
           }
           this.isGettingList = false;
           this.addLoading(-1);

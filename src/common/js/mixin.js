@@ -1,4 +1,5 @@
 import {mapGetters, mapMutations} from 'vuex';
+import Toast from '../component/Toast';
 
 export const baseFunction = { // 【使用mixins】【1】
   data() {
@@ -9,7 +10,12 @@ export const baseFunction = { // 【使用mixins】【1】
       // 正在获取文章/项目列表
       isGettingList: false,
       // 刷新文章列表
-      isRefresh: false
+      isRefresh: false,
+      toastOption: {
+        text: '',
+        top: 0
+      },
+      toastTop: 0
     };
   },
   computed: {
@@ -34,6 +40,14 @@ export const baseFunction = { // 【使用mixins】【1】
     initNextPage() {
       this.nextPage = 1;
     },
+    showToast({text, top}) {
+      this.toastOption = {
+        text, 'top': top || this.toastTop
+      };
+    },
+    initToastTop(top) {
+      this.toastTop = top;
+    },
     ...mapMutations({
       // 点击了头部刷新按钮
       setRefresh: 'REFRESH',
@@ -50,5 +64,8 @@ export const baseFunction = { // 【使用mixins】【1】
     refresh(newValue, oldValue) {
       this._clickRefreshButton(newValue, oldValue);
     }
+  },
+  components: {
+    Toast
   }
 };
