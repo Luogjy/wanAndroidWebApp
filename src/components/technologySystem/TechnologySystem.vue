@@ -91,7 +91,7 @@
               this.articles = this.articles.concat(res.data.datas);
               this.pageCount = res.data.pageCount;
               this.nextPage++;
-              this.showToast({text: '获取数据成功'});
+              this.showToast({text: this.articles.length ? '获取数据成功' : '没有数据 ╮(╯▽╰)╭'});
             }
             this.isGettingList = false;
             this.addLoading(-1);
