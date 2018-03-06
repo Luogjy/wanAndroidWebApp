@@ -45,6 +45,10 @@
     },
     methods: {
       _getProjectList() {
+        if (this.nextPage > this.pageCount) {
+          this.showToast({text: '已经到底了'});
+          return;
+        }
         this.isGettingList = true;
         this.addLoading(1);
         getProjectList(this.nextPage, this.selectedChapter.id).then((res) => {
@@ -53,6 +57,7 @@
               this.projects = [];
             }
             this.projects = this.projects.concat(res.data.datas);
+            this.pageCount = res.data.pageCount;
             this.nextPage++;
             this.showToast({text: '获取数据成功'});
           }
@@ -76,6 +81,7 @@
       refreshProjectList() {
         this.isRefresh = true;
         this.initNextPage();
+        this.initPageCount();
         this._getProjectList();
       },
       _touchBottom(newValue, oldValue) {

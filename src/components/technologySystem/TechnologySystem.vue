@@ -76,6 +76,10 @@
         });
       },
       _getArticleList() {
+        if (this.nextPage > this.pageCount) {
+          this.showToast({text: '已经到底了'});
+          return;
+        }
         if (this.selectedTwoChapter.id) {
           this.isGettingList = true;
           this.addLoading(1);
@@ -85,6 +89,7 @@
                 this.articles = [];
               }
               this.articles = this.articles.concat(res.data.datas);
+              this.pageCount = res.data.pageCount;
               this.nextPage++;
               this.showToast({text: '获取数据成功'});
             }
@@ -171,6 +176,7 @@
       refreshArticleList() {
         this.isRefresh = true;
         this.initNextPage();
+        this.initPageCount();
         this._getArticleList();
       },
       _touchBottom(newValue, oldValue) {

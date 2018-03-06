@@ -73,6 +73,10 @@
     methods: {
       // 获取新闻列表
       _getArticleList() {
+        if (this.nextPage > this.pageCount) {
+          this.showToast({text: '已经到底了'});
+          return;
+        }
         this.isGettingList = true;
         this.addLoading(1);
         getArticleList(this.nextPage).then((res) => {
@@ -81,6 +85,7 @@
               this.articles = [];
             }
             this.articles = this.articles.concat(res.data.datas);
+            this.pageCount = res.data.pageCount;
             this.nextPage++;
             this.showToast({text: '获取数据成功'}); // 使用Toast组件【4】
           }
@@ -113,6 +118,7 @@
         if (newValue && this.pageActivated && !this.isGettingList) { // 刷新页面数据
           this.isRefresh = true;
           this.initNextPage();
+          this.initPageCount();
           this._getPageData();
         }
       }

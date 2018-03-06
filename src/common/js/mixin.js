@@ -15,7 +15,9 @@ export const baseFunction = { // 【使用mixins】【1】
         text: '',
         top: 0
       },
-      toastTop: 0
+      toastTop: 0,
+      // 总页数
+      pageCount: 1
     };
   },
   computed: {
@@ -47,6 +49,9 @@ export const baseFunction = { // 【使用mixins】【1】
     },
     initToastTop(top) {
       this.toastTop = top;
+    },
+    initPageCount() {
+      this.pageCount = 1;
     },
     ...mapMutations({
       // 点击了头部刷新按钮
