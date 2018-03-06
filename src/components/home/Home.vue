@@ -82,6 +82,7 @@
         getArticleList(this.nextPage).then((res) => {
           if (res.errorCode >= 0) { // 成功
             if (this.isRefresh) {
+              window.scrollTo(0, 0); // 页面滚回顶部
               this.articles = [];
             }
             this.articles = this.articles.concat(res.data.datas);
