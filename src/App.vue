@@ -22,7 +22,11 @@
       return {
         preScrollTop: 0,
         toShowNavBar: true,
-        isShowDiscoverDialog: false
+        isShowDiscoverDialog: false,
+        touchStartY: 0,
+        timeout: null,
+        // 是否触发了滚动事件
+        isScrollEvent: false
       };
     },
     computed: {
@@ -33,15 +37,32 @@
     mounted() {
       this.$nextTick(function () {
         window.addEventListener('scroll', this.onScroll);
+        window.addEventListener('touchstart', this.onTouchStart);
+        window.addEventListener('touchmove', this.onTouchMove);
       });
     },
     methods: {
       onScroll() {
-        let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        this.isScrollEvent = true;
         this.touchBottomListener(); // 触底监听
-        this.showHideNavBar(scrollTop); // 导航栏的交互
+        this.showHideNavBarByScrollEvent(); // 导航栏的交互
       },
-      showHideNavBar(scrollTop) {
+      onTouchStart(e) {
+        this.isScrollEvent = false;
+        this.touchStartY = e.touches[0].pageY;
+      },
+      onTouchMove(e) {
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          if (!this.isScrollEvent) {
+            // 有时候内容太少页面没有滚动的，所以用触摸去控制导航栏，如果只用触摸事件去控制的话抖动太厉害太容易导致导航栏被频繁控制
+            this.toShowNavBar = this.touchStartY < e.touches[0].pageY;
+          }
+        }, 20);
+      },
+      showHideNavBarByScrollEvent() {
+        let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        // 有时候内容太少页面没有滚动的，所以用触摸去控制导航栏，如果只用触摸事件去控制的话抖动太厉害太容易导致导航栏被频繁控制
         this.toShowNavBar = this.preScrollTop > scrollTop;
         this.preScrollTop = scrollTop;
       },

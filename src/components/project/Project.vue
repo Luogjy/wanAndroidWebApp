@@ -26,25 +26,10 @@
     mixins: [baseFunction],
     data() {
       return {
-        chapters: [{
-          'children': [],
-          'courseId': 13,
-          'id': 294,
-          'name': '完整项目',
-          'order': 145000,
-          'parentChapterId': 293,
-          'visible': 0
-        }],
+        chapters: [],
         selectedChapter: {
           // 自己在父级的位置
-          position: -1,
-          'children': [],
-          'courseId': 13,
-          'id': 294,
-          'name': '完整项目',
-          'order': 145000,
-          'parentChapterId': 293,
-          'visible': 0
+          position: -1
         },
         projects: [],
         toShowFlowDialog: false,
