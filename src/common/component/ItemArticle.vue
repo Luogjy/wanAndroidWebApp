@@ -16,30 +16,14 @@
 </template>
 
 <script>
+  import {mapMutations} from 'vuex';
+
   export default {
     props: {
       item: {
         type: Object,
         default: function () {
-          return {
-            'apkLink': '',
-            'author': '移动开发前线',
-            'chapterId': 269,
-            'chapterName': '官方发布',
-            'collect': false,
-            'courseId': 13,
-            'desc': '',
-            'envelopePic': '',
-            'id': 2434,
-            'link': 'https://mp.weixin.qq.com/s/gICH9osyIzz9WerXO1C_8g',
-            'niceDate': '7小时前',
-            'origin': '',
-            'projectLink': '',
-            'publishTime': 1519961226000,
-            'title': '谷歌确认将限制Android非SDK接口使用了',
-            'visible': 1,
-            'zan': 0
-          };
+          return {};
         }
       },
       canOpenChapter: {
@@ -55,6 +39,7 @@
     methods: {
       toChapterPage() {
         if (this.canOpenChapter) {
+          this.setDefaultTwoChapter({chapterId: this.item.chapterId, chapterName: this.item.chapterName});
           this.$router.push('/technologySystem');
         }
       },
@@ -62,7 +47,10 @@
         if (this.canOpenAuthor) {
           this.$router.push('/author');
         }
-      }
+      },
+      ...mapMutations({
+        setDefaultTwoChapter: 'DEFAULT_TWO_CHAPTER'
+      })
     },
     name: 'item-article'
   };

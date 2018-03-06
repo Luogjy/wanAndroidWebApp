@@ -22,6 +22,7 @@
   import {getTechnologySystem, getArticleList} from './js/technologySystem';
   import FlowDialog from '../../common/component/FlowDialog';
   import {baseFunction} from '../../common/js/mixin';
+  import {mapGetters, mapMutations} from 'vuex';
 
   export default {
     mixins: [baseFunction],
@@ -52,24 +53,54 @@
         isUserHideFlowDialog: false
       };
     },
+    computed: {
+      ...mapGetters(['defaultTwoChapter'])
+    },
     created() {
       this._getTechnologySystem();
     },
     mounted() {
       this.initToastTop(this.$refs.articleWrapper.getBoundingClientRect().top);
     },
+    activated() {
+      if (this.defaultTwoChapter) {
+        this.useDefaultTwoChapter();
+      }
+    },
     methods: {
+      // 使用从其他地方带过来的指定分类
+      useDefaultTwoChapter() {
+        for (let i = 0; i < this.systems.length; i++) {
+          let one = this.systems[i];
+          for (let j = 0; j < one.children.length; j++) {
+            let item = one.children[j];
+            if (item.id === this.defaultTwoChapter.chapterId) {
+              this.selectedTwoChapter = item;
+              this.selectedTwoChapter.position = j;
+              this.selectedOneChapter = JSON.parse(JSON.stringify(one));
+              this.selectedOneChapter.position = i;
+              this.setDefaultTwoChapter(null);
+              this.refreshArticleList();
+              return;
+            }
+          }
+        }
+      },
       _getTechnologySystem() {
         getTechnologySystem().then((res) => {
           if (res.errorCode >= 0) {
             this.systems = res.data;
             if (this.systems.length > 0) {
-              this.selectedOneChapter = JSON.parse(JSON.stringify(this.systems[0]));
-              this.selectedOneChapter.position = 0;
-              if (this.selectedOneChapter.children.length > 0) {
-                this.selectedTwoChapter = this.selectedOneChapter.children[0];
-                this.selectedTwoChapter.position = 0;
-                this._getArticleList();
+              if (this.defaultTwoChapter) { // 从其他地方带着指定分类过来
+                this.useDefaultTwoChapter();
+              } else { // 并没有从其他地方带着指定分类过来
+                this.selectedOneChapter = JSON.parse(JSON.stringify(this.systems[0]));
+                this.selectedOneChapter.position = 0;
+                if (this.selectedOneChapter.children.length > 0) {
+                  this.selectedTwoChapter = this.selectedOneChapter.children[0];
+                  this.selectedTwoChapter.position = 0;
+                  this._getArticleList();
+                }
               }
             }
           }
@@ -190,7 +221,10 @@
         if (newValue && this.pageActivated && !this.isGettingList) { // 刷新页面数据
           this.refreshArticleList();
         }
-      }
+      },
+      ...mapMutations({
+        setDefaultTwoChapter: 'DEFAULT_TWO_CHAPTER'
+      })
     },
     components: {
       ItemArticle, FlowDialog
