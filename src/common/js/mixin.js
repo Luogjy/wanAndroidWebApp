@@ -107,6 +107,11 @@ export const appHeadFunction = {
     this._getOftenVisitWebsiteList();
   },
   methods: {
+    setFlowDialogTitleAndItemsAndSelectType(title, items, type) {
+      this.flowDialogTitle = title;
+      this.flowItems = items;
+      this.selectType = type;
+    },
     // 获取导航数据
     _getNavDatas(showDialog = false) {
       if (!this.flowDialogIsBusing) {
@@ -120,17 +125,13 @@ export const appHeadFunction = {
           if (res.errorCode === 0) {
             this.navDatas = res.data;
             if (!this.flowDialogIsBusing) {
-              this.selectType = this.SELECT_TYPE.ONE_NAV;
-              this.flowItems = this.navDatas;
-              this.flowDialogTitle = '导航分类';
+              this.setFlowDialogTitleAndItemsAndSelectType('导航分类', this.navDatas, this.SELECT_TYPE.ONE_NAV);
             }
           }
         });
       } else {
         if (!this.flowDialogIsBusing) {
-          this.selectType = this.SELECT_TYPE.ONE_NAV;
-          this.flowItems = this.navDatas;
-          this.flowDialogTitle = '导航分类';
+          this.setFlowDialogTitleAndItemsAndSelectType('导航分类', this.navDatas, this.SELECT_TYPE.ONE_NAV);
         }
       }
     },
@@ -146,17 +147,13 @@ export const appHeadFunction = {
           if (res.errorCode === 0) {
             this.oftenVisitWebsiteList = res.data;
             if (!this.flowDialogIsBusing) {
-              this.selectType = this.SELECT_TYPE.OFTEN_VISIT_WEBSITE;
-              this.flowItems = this.oftenVisitWebsiteList;
-              this.flowDialogTitle = '常用网站';
+              this.setFlowDialogTitleAndItemsAndSelectType('常用网站', this.oftenVisitWebsiteList, this.SELECT_TYPE.OFTEN_VISIT_WEBSITE);
             }
           }
         });
       } else {
         if (!this.flowDialogIsBusing) {
-          this.selectType = this.SELECT_TYPE.OFTEN_VISIT_WEBSITE;
-          this.flowItems = this.oftenVisitWebsiteList;
-          this.flowDialogTitle = '常用网站';
+          this.setFlowDialogTitleAndItemsAndSelectType('常用网站', this.oftenVisitWebsiteList, this.SELECT_TYPE.OFTEN_VISIT_WEBSITE);
         }
       }
     },
@@ -174,15 +171,13 @@ export const appHeadFunction = {
         item.articles.forEach((_item, _index) => {
           _item.name = _item.title;
         });
-        this.flowItems = item.articles;
-        this.flowDialogTitle = item.name;
-        this.selectType = this.SELECT_TYPE.TWO_NAV;
+        this.setFlowDialogTitleAndItemsAndSelectType(item.name, item.articles, this.SELECT_TYPE.TWO_NAV);
       } else if (this.selectType === this.SELECT_TYPE.TWO_NAV) {
         window.open(item.link); // 打开新页面
       } else if (this.selectType === this.SELECT_TYPE.TOOLS) {
-        window.open(item.link); // 打开新页面
+        window.open(item.link);
       } else if (this.selectType === this.SELECT_TYPE.OFTEN_VISIT_WEBSITE) {
-        window.open(item.link); // 打开新页面
+        window.open(item.link);
       }
     },
     clickNav() {
@@ -191,14 +186,12 @@ export const appHeadFunction = {
     clickTool() {
       if (!this.flowDialogIsBusing) {
         this.showFlowDialog = true;
-        this.selectType = this.SELECT_TYPE.TOOLS;
-        this.flowItems = tools;
-        this.flowDialogTitle = '常用工具';
         this.autoHideFlowDialog = true;
+        this.setFlowDialogTitleAndItemsAndSelectType('常用工具', tools, this.SELECT_TYPE.TOOLS);
       }
     },
     clickWebsite() {
-      console.log('clickWebsite')
+      console.log('clickWebsite');
       this._getOftenVisitWebsiteList(true);
     },
     clickContactUs() {
