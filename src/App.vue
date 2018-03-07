@@ -1,13 +1,17 @@
 <template>
   <div id="app">
     <my-header @discover="showDiscoverDialog" class="my-header" refreshing=""/>
-    <discover :show-discover="isShowDiscoverDialog" @hideDiscover="hideDiscoverDialog"/>
+    <discover :show-discover="isShowDiscoverDialog" @hideDiscover="hideDiscoverDialog" @clickNav="clickNav"
+              @clickTool="clickTool" @clickWebsite="clickWebsite" @clickContactUs="clickContactUs"/>
     <article>
       <keep-alive>
         <router-view/>
       </keep-alive>
     </article>
     <nav-bar class="nav-bar" :class="showNavBar"/>
+    <flow-dialog :title="flowDialogTitle" :items="flowItems" :auto-hide="autoHideFlowDialog"
+                 :show-dialog="showFlowDialog" @hideDialog="hideFlowDialogEvent" @userHideDialog="userHideDialogEvent"
+                 @selectedItem="selectedItemByFlowDialog"/>
   </div>
 </template>
 
@@ -16,8 +20,10 @@
   import NavBar from './common/component/NavBar';
   import Discover from './common/component/Discover';
   import {mapMutations} from 'vuex';
+  import {appHeadFunction} from './common/js/mixin';
 
   export default {
+    mixins: [appHeadFunction],
     data() {
       return {
         preScrollTop: 0,

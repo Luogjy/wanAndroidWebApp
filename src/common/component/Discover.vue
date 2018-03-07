@@ -3,10 +3,10 @@
     <div @click.stop="hideDiscover" class="maskTop" :class="showDiscover?'maskTop-enter':'maskTop-exit'"></div>
     <ul @click.stop="hideDiscover" class="item-wrapper"
         :class="showDiscover?'item-wrapper-enter':'item-wrapper-exit'">
-      <li>导航</li>
-      <li>工具</li>
-      <li>常用网站</li>
-      <li>联系我们</li>
+      <li @click="clickNav">导航</li>
+      <li @click="clickTool">工具</li>
+      <li @Click="clickWebsite">常用网站</li>
+      <li @click="clickContactUs">联系我们</li>
     </ul>
     <div @click.stop="hideDiscover" class="mask-bottom"
          :class="showDiscover?'mask-bottom-enter':'mask-bottom-exit'">
@@ -25,8 +25,19 @@
     },
     methods: {
       hideDiscover() {
-        console.log('hideDiscover');
         this.$emit('hideDiscover');
+      },
+      clickNav() {
+        this.$emit('clickNav');
+      },
+      clickTool() {
+        this.$emit('clickTool');
+      },
+      clickWebsite() {
+        this.$emit('clickWebsite');
+      },
+      clickContactUs() {
+        this.$emit('clickContactUs');
       }
     }
   };

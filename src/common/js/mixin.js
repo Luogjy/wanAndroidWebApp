@@ -1,5 +1,7 @@
 import {mapGetters, mapMutations} from 'vuex';
 import Toast from '../component/Toast';
+import FlowDialog from '../component/FlowDialog';
+import {getNavDatas} from '../../js/navData';
 
 export const baseFunction = { // 【使用mixins】【1】
   data() {
@@ -72,5 +74,87 @@ export const baseFunction = { // 【使用mixins】【1】
   },
   components: {
     Toast
+  }
+};
+/**
+ * App组件头部的功能
+ * @type {{}}
+ */
+export const appHeadFunction = {
+  data() {
+    return {
+      navDatas: [],
+      flowDialogTitle: '',
+      flowItems: [],
+      autoHideFlowDialog: true,
+      showFlowDialog: false,
+      SELECT_TYPE: {
+        ONE_NAV: 'ONE_NAV',
+        TWO_NAV: 'TWO_NAV'
+      },
+      selectType: null
+    };
+  },
+  mounted() {
+    this._getNavDatas();
+  },
+  methods: {
+    // 获取导航数据
+    _getNavDatas(showDialog = false) {
+      // 先打开窗口再请求等待数据返回吧，否则网络太慢用户以为点击了按钮没反应
+      this.flowDialogTitle = '(正在获取导航分类...)';
+      this.showFlowDialog = showDialog;
+      this.autoHideFlowDialog = false;
+      if (this.navDatas.length <= 0) {
+        getNavDatas().then((res) => {
+          if (res.errorCode === 0) {
+            this.navDatas = res.data;
+            this.selectType = this.SELECT_TYPE.ONE_NAV;
+            this.flowItems = this.navDatas;
+            this.flowDialogTitle = '导航分类';
+          }
+        });
+      } else {
+        this.selectType = this.SELECT_TYPE.ONE_NAV;
+        this.flowItems = this.navDatas;
+        this.flowDialogTitle = '导航分类';
+      }
+    },
+    // 接收到关闭FlowDialog的事件，就通过变量控制FlowDialog关闭
+    hideFlowDialogEvent() {
+      this.showFlowDialog = false;
+    },
+    // 接收到用户关闭FlowDialog的事件，就通过变量控制FlowDialog关闭
+    userHideDialogEvent() {
+      this.showFlowDialog = false;
+    },
+    selectedItemByFlowDialog({item, index}) {
+      if (this.selectType === this.SELECT_TYPE.ONE_NAV) {
+        this.autoHideFlowDialog = true;
+        item.articles.forEach((_item, _index) => {
+          _item.name = _item.title;
+        });
+        this.flowItems = item.articles;
+        this.flowDialogTitle = item.name;
+        this.selectType = this.SELECT_TYPE.TWO_NAV;
+      } else if (this.selectType === this.SELECT_TYPE.TWO_NAV) {
+        window.open(item.link);
+      }
+    },
+    clickNav() {
+      this._getNavDatas(true);
+    },
+    clickTool() {
+
+    },
+    clickWebsite() {
+
+    },
+    clickContactUs() {
+
+    }
+  },
+  components: {
+    FlowDialog
   }
 };
