@@ -97,6 +97,18 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           console.log(e);
         });
       });
+
+      app.get('/api/getAuthorArticleList', function (req, res) {
+        const url = req.query.url;
+        axios.get(url, {
+          headers: {},
+        }).then((response) => {
+          res.json(response.data);
+        }, (err) => {
+        }).catch((e) => {
+          console.log(e);
+        });
+      });
     },
     clientLogLevel: 'warning',
     historyApiFallback: {

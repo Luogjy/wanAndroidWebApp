@@ -45,11 +45,13 @@
       },
       toAuthorPage() {
         if (this.canOpenAuthor) {
+          this.setAuthor(this.item.author);
           this.$router.push('/author');
         }
       },
       ...mapMutations({
-        setDefaultTwoChapter: 'DEFAULT_TWO_CHAPTER'
+        setDefaultTwoChapter: 'DEFAULT_TWO_CHAPTER',
+        setAuthor: 'AUTHOR'
       })
     },
     name: 'item-article'

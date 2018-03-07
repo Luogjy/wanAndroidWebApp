@@ -25,6 +25,9 @@ const mutations = {
   },
   [types.DEFAULT_TWO_CHAPTER](state, defaultTwoChapter) {
     state.defaultTwoChapter = defaultTwoChapter;
+  },
+  [types.AUTHOR](state, author) {
+    state.author = author;
   }
 
 };

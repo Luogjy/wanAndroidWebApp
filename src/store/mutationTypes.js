@@ -5,3 +5,4 @@ export const REFRESH = 'REFRESH';
 export const LOADING = 'LOADING';
 export const SEARCH_PAGE_IS_SHOWING = 'SEARCH_PAGE_IS_SHOWING';
 export const DEFAULT_TWO_CHAPTER = 'DEFAULT_TWO_CHAPTER';
+export const AUTHOR = 'AUTHOR';
