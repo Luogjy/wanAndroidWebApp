@@ -138,7 +138,7 @@ export const appHeadFunction = {
         this.flowDialogTitle = item.name;
         this.selectType = this.SELECT_TYPE.TWO_NAV;
       } else if (this.selectType === this.SELECT_TYPE.TWO_NAV) {
-        window.open(item.link);
+        window.open(item.link); // 打开新页面
       }
     },
     clickNav() {
