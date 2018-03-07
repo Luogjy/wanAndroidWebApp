@@ -139,7 +139,7 @@ export const appHeadFunction = {
       if (!this.flowDialogIsBusing) {
         this.showFlowDialog = showDialog;
         this.flowDialogTitle = '(正在获取常用网站...)';
-        this.autoHideFlowDialog = false;
+        this.autoHideFlowDialog = true;
       }
       if (this.oftenVisitWebsiteList.length <= 0) {
         getOftenVisitWebsiteList().then((res) => {
@@ -190,11 +190,11 @@ export const appHeadFunction = {
     },
     clickTool() {
       if (!this.flowDialogIsBusing) {
+        this.showFlowDialog = true;
         this.selectType = this.SELECT_TYPE.TOOLS;
         this.flowItems = tools;
         this.flowDialogTitle = '常用工具';
         this.autoHideFlowDialog = true;
-        this.showFlowDialog = true;
       }
     },
     clickWebsite() {
