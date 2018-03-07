@@ -2,6 +2,7 @@ import {mapGetters, mapMutations} from 'vuex';
 import Toast from '../component/Toast';
 import FlowDialog from '../component/FlowDialog';
 import {getNavDatas} from '../../js/navData';
+import tools from '../../js/tools';
 
 export const baseFunction = { // 【使用mixins】【1】
   data() {
@@ -90,7 +91,8 @@ export const appHeadFunction = {
       showFlowDialog: false,
       SELECT_TYPE: {
         ONE_NAV: 'ONE_NAV',
-        TWO_NAV: 'TWO_NAV'
+        TWO_NAV: 'TWO_NAV',
+        TOOLS: 'TOOLS'
       },
       selectType: null
     };
@@ -139,13 +141,19 @@ export const appHeadFunction = {
         this.selectType = this.SELECT_TYPE.TWO_NAV;
       } else if (this.selectType === this.SELECT_TYPE.TWO_NAV) {
         window.open(item.link); // 打开新页面
+      } else if (this.selectType === this.SELECT_TYPE.TOOLS) {
+        window.open(item.link); // 打开新页面
       }
     },
     clickNav() {
       this._getNavDatas(true);
     },
     clickTool() {
-
+      this.selectType = this.SELECT_TYPE.TOOLS;
+      this.flowItems = tools;
+      this.flowDialogTitle = '常用工具';
+      this.autoHideFlowDialog = true;
+      this.showFlowDialog = true;
     },
     clickWebsite() {
 
