@@ -2,6 +2,7 @@ import {mapGetters, mapMutations} from 'vuex';
 import Toast from '../component/Toast';
 import FlowDialog from '../component/FlowDialog';
 import {getNavDatas} from '../../js/navData';
+import {getOftenVisitWebsiteList} from '../../js/oftenVisitWebsite';
 import tools from '../../js/tools';
 
 export const baseFunction = { // 【使用mixins】【1】
@@ -92,34 +93,71 @@ export const appHeadFunction = {
       SELECT_TYPE: {
         ONE_NAV: 'ONE_NAV',
         TWO_NAV: 'TWO_NAV',
-        TOOLS: 'TOOLS'
+        TOOLS: 'TOOLS',
+        OFTEN_VISIT_WEBSITE: 'OFTEN_VISIT_WEBSITE'
       },
-      selectType: null
+      selectType: null,
+      oftenVisitWebsiteList: [],
+      // flowDialog被占用，即被主动打开等等数据中
+      flowDialogIsBusing: false
     };
   },
   mounted() {
     this._getNavDatas();
+    this._getOftenVisitWebsiteList();
   },
   methods: {
     // 获取导航数据
     _getNavDatas(showDialog = false) {
-      // 先打开窗口再请求等待数据返回吧，否则网络太慢用户以为点击了按钮没反应
-      this.flowDialogTitle = '(正在获取导航分类...)';
-      this.showFlowDialog = showDialog;
-      this.autoHideFlowDialog = false;
+      if (!this.flowDialogIsBusing) {
+        // 先打开窗口再请求等待数据返回吧，否则网络太慢用户以为点击了按钮没反应
+        this.showFlowDialog = showDialog;
+        this.flowDialogTitle = '(正在获取导航分类...)';
+        this.autoHideFlowDialog = false;
+      }
       if (this.navDatas.length <= 0) {
         getNavDatas().then((res) => {
           if (res.errorCode === 0) {
             this.navDatas = res.data;
-            this.selectType = this.SELECT_TYPE.ONE_NAV;
-            this.flowItems = this.navDatas;
-            this.flowDialogTitle = '导航分类';
+            if (!this.flowDialogIsBusing) {
+              this.selectType = this.SELECT_TYPE.ONE_NAV;
+              this.flowItems = this.navDatas;
+              this.flowDialogTitle = '导航分类';
+            }
           }
         });
       } else {
-        this.selectType = this.SELECT_TYPE.ONE_NAV;
-        this.flowItems = this.navDatas;
-        this.flowDialogTitle = '导航分类';
+        if (!this.flowDialogIsBusing) {
+          this.selectType = this.SELECT_TYPE.ONE_NAV;
+          this.flowItems = this.navDatas;
+          this.flowDialogTitle = '导航分类';
+        }
+      }
+    },
+    // 获取常用网站
+    _getOftenVisitWebsiteList(showDialog = false) {
+      if (!this.flowDialogIsBusing) {
+        this.showFlowDialog = showDialog;
+        this.flowDialogTitle = '(正在获取常用网站...)';
+        this.autoHideFlowDialog = false;
+      }
+      if (this.oftenVisitWebsiteList.length <= 0) {
+        getOftenVisitWebsiteList().then((res) => {
+          if (res.errorCode === 0) {
+            this.oftenVisitWebsiteList = res.data;
+            if (!this.flowDialogIsBusing) {
+              this.selectType = this.SELECT_TYPE.OFTEN_VISIT_WEBSITE;
+              this.flowItems = this.oftenVisitWebsiteList;
+              this.flowDialogTitle = '常用网站';
+            }
+          }
+        });
+      } else {
+        if (!this.flowDialogIsBusing) {
+          this.selectType = this.SELECT_TYPE.OFTEN_VISIT_WEBSITE;
+          this.flowItems = this.oftenVisitWebsiteList;
+          this.flowDialogTitle = '常用网站';
+        }
       }
     },
     // 接收到关闭FlowDialog的事件，就通过变量控制FlowDialog关闭
@@ -143,23 +181,32 @@ export const appHeadFunction = {
         window.open(item.link); // 打开新页面
       } else if (this.selectType === this.SELECT_TYPE.TOOLS) {
         window.open(item.link); // 打开新页面
+      } else if (this.selectType === this.SELECT_TYPE.OFTEN_VISIT_WEBSITE) {
+        window.open(item.link); // 打开新页面
       }
     },
     clickNav() {
       this._getNavDatas(true);
     },
     clickTool() {
-      this.selectType = this.SELECT_TYPE.TOOLS;
-      this.flowItems = tools;
-      this.flowDialogTitle = '常用工具';
-      this.autoHideFlowDialog = true;
-      this.showFlowDialog = true;
+      if (!this.flowDialogIsBusing) {
+        this.selectType = this.SELECT_TYPE.TOOLS;
+        this.flowItems = tools;
+        this.flowDialogTitle = '常用工具';
+        this.autoHideFlowDialog = true;
+        this.showFlowDialog = true;
+      }
     },
     clickWebsite() {
-
+      console.log('clickWebsite')
+      this._getOftenVisitWebsiteList(true);
     },
     clickContactUs() {
-
+    }
+  },
+  watch: {
+    showFlowDialog(newValue, oldValue) {
+      this.flowDialogIsBusing = newValue;
     }
   },
   components: {

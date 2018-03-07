@@ -117,7 +117,7 @@
         flex-wrap: wrap;
         flex-direction: row;
         min-height: 80px;
-        max-height: 260px;
+        max-height: 360px;
         color: $bgColor;
         overflow: scroll;
         li {
