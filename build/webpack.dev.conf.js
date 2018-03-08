@@ -107,10 +107,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         axios.get(url, {
           headers: {},
         }).then((response) => {
-          console.log(response);
           res.json(response.data);
         }, (err) => {
-          console.log(err);
         }).catch((e) => {
           console.log(e);
         });
