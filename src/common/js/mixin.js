@@ -101,7 +101,13 @@ export const appHeadFunction = {
       selectType: null,
       oftenVisitWebsiteList: [],
       // flowDialog被占用，即被主动打开等等数据中
-      flowDialogIsBusing: false
+      flowDialogIsBusing: false,
+      // 国内大牛博客集合
+      LINK_PERSONAL_BLOG: 'http://www.wanandroid.com/article/list/0?cid=176',
+      // 热门开发专题
+      COMPONENT_THEME: 'http://www.wanandroid.com/article/list/0?cid=185',
+      // Android面试相关
+      ANDROID_INTERVIEW: 'http://www.wanandroid.com/article/list/0?cid=73'
     };
   },
   mounted() {
@@ -179,7 +185,14 @@ export const appHeadFunction = {
       } else if (this.selectType === this.SELECT_TYPE.TOOLS) {
         window.open(item.link);
       } else if (this.selectType === this.SELECT_TYPE.OFTEN_VISIT_WEBSITE) {
-        window.open(item.link);
+        if (this.LINK_PERSONAL_BLOG === item.link || this.COMPONENT_THEME === item.link || this.ANDROID_INTERVIEW === item.link) {
+          let partUrl = 'http://www.wanandroid.com/article/list/0?cid=';
+          let chapterId = parseInt(item.link.replace(partUrl, ''));
+          this.setDefaultTwoChapter({chapterId, chapterName: ''});
+          this.$router.push('/technologySystem');
+        } else {
+          window.open(item.link);
+        }
       } else if (this.selectType === this.SELECT_TYPE.CONTACT_US) {
         window.open(item.link);
       }
@@ -203,7 +216,10 @@ export const appHeadFunction = {
         this.autoHideFlowDialog = true;
         this.setFlowDialogTitleAndItemsAndSelectType('联系我们', contactUs, this.SELECT_TYPE.CONTACT_US);
       }
-    }
+    },
+    ...mapMutations({
+      setDefaultTwoChapter: 'DEFAULT_TWO_CHAPTER'
+    })
   },
   watch: {
     showFlowDialog(newValue, oldValue) {

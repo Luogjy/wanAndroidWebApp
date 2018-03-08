@@ -26,10 +26,12 @@
           return {};
         }
       },
+      // 分类可以点击
       canOpenChapter: {
         type: Boolean,
         default: true
       },
+      // 作者名可以点击
       canOpenAuthor: {
         type: Boolean,
         default: true

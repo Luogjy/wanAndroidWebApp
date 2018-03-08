@@ -226,6 +226,14 @@
         setDefaultTwoChapter: 'DEFAULT_TWO_CHAPTER'
       })
     },
+    watch: {
+      defaultTwoChapter(newValue, oldValue) {
+        // 从“发现”里的“常用网站”跳转过来的没有携带标题，用这个来避免在本页处于activated状态时点击“常用网站”没有切换二级分类的情况
+        if (newValue && newValue.chapterId && !newValue.chapterName) {
+          this.useDefaultTwoChapter();
+        }
+      }
+    },
     components: {
       ItemArticle, FlowDialog
     }
