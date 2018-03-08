@@ -4,6 +4,7 @@ import FlowDialog from '../component/FlowDialog';
 import {getNavDatas} from '../../js/navData';
 import {getOftenVisitWebsiteList} from '../../js/oftenVisitWebsite';
 import tools from '../../js/tools';
+import contactUs from '../../js/contactUs';
 
 export const baseFunction = { // 【使用mixins】【1】
   data() {
@@ -94,7 +95,8 @@ export const appHeadFunction = {
         ONE_NAV: 'ONE_NAV',
         TWO_NAV: 'TWO_NAV',
         TOOLS: 'TOOLS',
-        OFTEN_VISIT_WEBSITE: 'OFTEN_VISIT_WEBSITE'
+        OFTEN_VISIT_WEBSITE: 'OFTEN_VISIT_WEBSITE',
+        CONTACT_US: 'CONTACT_US'
       },
       selectType: null,
       oftenVisitWebsiteList: [],
@@ -178,6 +180,8 @@ export const appHeadFunction = {
         window.open(item.link);
       } else if (this.selectType === this.SELECT_TYPE.OFTEN_VISIT_WEBSITE) {
         window.open(item.link);
+      } else if (this.selectType === this.SELECT_TYPE.CONTACT_US) {
+        window.open(item.link);
       }
     },
     clickNav() {
@@ -191,10 +195,14 @@ export const appHeadFunction = {
       }
     },
     clickWebsite() {
-      console.log('clickWebsite');
       this._getOftenVisitWebsiteList(true);
     },
     clickContactUs() {
+      if (!this.flowDialogIsBusing) {
+        this.showFlowDialog = true;
+        this.autoHideFlowDialog = true;
+        this.setFlowDialogTitleAndItemsAndSelectType('联系我们', contactUs, this.SELECT_TYPE.CONTACT_US);
+      }
     }
   },
   watch: {

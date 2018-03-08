@@ -6,7 +6,11 @@
       <li @click="clickNav">导航</li>
       <li @click="clickTool">工具</li>
       <li @click="clickWebsite">常用网站</li>
+      <li @click="clickOpenApi">本站开放API</li>
+      <li @click="clickDownApk">本站Apk下载</li>
+      <li @click="clickHistory">本站历史</li>
       <li @click="clickContactUs">联系我们</li>
+      <li class="text">交流群：591683946</li>
     </ul>
     <div @click.stop="hideDiscover" class="mask-bottom"
          :class="showDiscover?'mask-bottom-enter':'mask-bottom-exit'">
@@ -35,6 +39,15 @@
       },
       clickWebsite() {
         this.$emit('clickWebsite');
+      },
+      clickOpenApi() {
+        window.open('http://www.wanandroid.com/blog/show/2');
+      },
+      clickDownApk() {
+        window.open('http://www.wanandroid.com/blog/show/2029');
+      },
+      clickHistory() {
+        window.open('http://www.wanandroid.com/blog/show/2042');
       },
       clickContactUs() {
         this.$emit('clickContactUs');
@@ -102,12 +115,15 @@
         line-height: $itemHeight;
         padding-left: 20px;
       }
+      .text {
+        color: #000000;
+      }
     }
 
     .item-wrapper-enter {
       transition-property: height, opacity;
       transition-duration: 300ms;
-      height: $itemHeight*4;
+      height: $itemHeight*8;
       opacity: 1;
       transform: translate3d(0, 0, 0); /*开启硬件加速*/
       backface-visibility: hidden; /*元素旋转时隐藏背面*/
