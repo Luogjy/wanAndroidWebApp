@@ -3,7 +3,7 @@
     <toast :show-option="toastOption"/>
     <div class="name-wrapper">
       <span class="tip">作者昵称：</span>
-      <span class="name">{{theAuthor}}</span>
+      <span class="name">{{author}}</span>
     </div>
 
     <div ref="listWrapper" class="list-wrapper">
@@ -17,19 +17,17 @@
   import ItemArticle from '../../common/component/ItemArticle';
   import {baseFunction} from '../../common/js/mixin';
   import {getAuthorArticleList} from './js/author';
-  import {mapGetters, mapMutations} from 'vuex';
 
   export default {
     mixins: [baseFunction],
     data() {
       return {
-        theAuthor: null,
+        author: null,
         articles: []
       };
     },
     created() {
-      this.theAuthor = this.author;
-      this.setAuthor(null);
+      this.author = this.$route.params.author;
       this._getAuthorArticleList();
     },
     mounted() {
@@ -43,13 +41,12 @@
         }
         this.isGettingList = true;
         this.addLoading(1);
-        getAuthorArticleList(this.nextPage, this.theAuthor).then((res) => {
+        getAuthorArticleList(this.nextPage, this.author).then((res) => {
           if (res.errorCode >= 0) { // 成功
             if (this.isRefresh) {
               window.scrollTo(0, 0); // 页面滚回顶部
               this.articles = [];
             }
-            console.log(res.data);
             this.articles = this.articles.concat(res.data.datas);
             this.pageCount = res.data.pageCount;
             this.nextPage++;
@@ -73,13 +70,7 @@
           this.initPageCount();
           this._getAuthorArticleList();
         }
-      },
-      ...mapMutations({
-        setAuthor: 'AUTHOR'
-      })
-    },
-    computed: {
-      ...mapGetters(['author'])
+      }
     },
     components: {
       ItemArticle

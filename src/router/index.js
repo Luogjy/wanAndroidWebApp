@@ -32,7 +32,7 @@ export default new Router({
       component: Collection
     },
     {
-      path: '/author',
+      path: '/author/:author',
       component: Author
     },
     {

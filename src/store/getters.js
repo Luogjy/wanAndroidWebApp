@@ -9,5 +9,3 @@ export const loading = state => state.loading;
 export const searchPageIsShowing = state => state.searchPageIsShowing;
 
 export const defaultTwoChapter = state => state.defaultTwoChapter;
-
-export const author = state => state.author;
