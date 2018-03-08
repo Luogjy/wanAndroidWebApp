@@ -26,8 +26,14 @@
         articles: []
       };
     },
-    created() {
+    activated() {
+      console.log(this.$route.params.author);
       this.author = this.$route.params.author;
+
+      this.initNextPage();
+      this.initPageCount();
+      this.isRefresh = true;
+      this.articles = [];
       this._getAuthorArticleList();
     },
     mounted() {
@@ -48,6 +54,7 @@
               this.articles = [];
             }
             this.articles = this.articles.concat(res.data.datas);
+            console.log(this.articles);
             this.pageCount = res.data.pageCount;
             this.nextPage++;
             this.showToast({text: this.articles.length ? '获取文章成功' : '没有数据 ╮(╯▽╰)╭'});

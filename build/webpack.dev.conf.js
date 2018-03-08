@@ -99,12 +99,18 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       });
 
       app.get('/api/getAuthorArticleList', function (req, res) {
-        const url = req.query.url;
+        /*
+        把url当参数传过来使用，如果其中有中文(参数为用户昵称，可能出现中文)，这么直接作为url会发送请求失败(Chrome会出现Provisional headers are shown)，
+        所以要先把它进行URI编码
+        */
+        const url = encodeURI(req.query.url);
         axios.get(url, {
           headers: {},
         }).then((response) => {
+          console.log(response);
           res.json(response.data);
         }, (err) => {
+          console.log(err);
         }).catch((e) => {
           console.log(e);
         });
