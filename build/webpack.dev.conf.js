@@ -137,6 +137,18 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           console.log(e);
         });
       });
+
+      app.get('/api/getHotKey', function (req, res) {
+        const url = encodeURI(req.query.url);
+        axios.get(url, {
+          headers: {},
+        }).then((response) => {
+          res.json(response.data);
+        }, (err) => {
+        }).catch((e) => {
+          console.log(e);
+        });
+      });
     },
     clientLogLevel: 'warning',
     historyApiFallback: {
