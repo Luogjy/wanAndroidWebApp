@@ -2,7 +2,6 @@
   <section class="wrapper">
     <a :href="item.link">
       <div class="content">
-        {{item.chapterName}}
         <img v-show="!item.collect" class="collect" src="../img/collect.png">
         <img v-show="item.collect" class="collect" src="../img/collected.png">
         <span class="title" v-html="item.title">{{item.title}}</span>
