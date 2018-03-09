@@ -20,12 +20,15 @@ const mutations = {
   [types.LOADING](state, loading) {
     state.loading = state.loading + loading;
   },
-  [types.SEARCH_PAGE_IS_SHOWING](state, searchPageIsShowing) {
-    state.searchPageIsShowing = searchPageIsShowing;
-  },
+  // [types.SEARCH_PAGE_IS_SHOWING](state, searchPageIsShowing) {
+  //   state.searchPageIsShowing = searchPageIsShowing;
+  // },
   [types.DEFAULT_TWO_CHAPTER](state, defaultTwoChapter) {
     state.defaultTwoChapter = defaultTwoChapter;
   }
+  // [types.THE_SEARCH_KEY](state, theSearchKey) {
+  //   state.theSearchKey = theSearchKey;
+  // }
 
 };
 export default mutations;

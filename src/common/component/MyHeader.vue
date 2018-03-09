@@ -1,7 +1,6 @@
 <template>
   <section>
-    <!--一般状态-->
-    <div v-show="!showSearch_" class="default-wrapper">
+    <div class="default-wrapper">
       <span class="user-wrapper">
         <span class="login">登录</span>|<span class="register">注册</span>
         <span class="user">luogjy</span>
@@ -13,15 +12,8 @@
       </span>
       <span class="right-wrapper">
         <span @click="discover" class="discover">发现</span>
-        <img class="search" src="../img/search.png" @click="showSearchBar"/>
+        <img class="search" src="../img/search.png" @click="showSearchPage"/>
       </span>
-    </div>
-
-    <!--搜索状态-->
-    <div v-show="showSearch_" class="search-wrapper">
-      <img class="back" src="../img/right.png" @click="hideSearchBar"/>
-      <input class="box" ref="query" v-model="query" placeholder="搜索关键词以空格形式隔开"/>
-      <img class="search" src="../img/search.png"/>
     </div>
   </section>
 </template>
@@ -30,23 +22,14 @@
   import {mapMutations, mapGetters} from 'vuex';
 
   export default {
-    props: {
-      showSearch: {
-        type: Boolean,
-        default: false
-      }
-    },
     data() {
       return {
-        query: '',
         // 刷新按钮转动
-        rotating: false,
-        // 显示搜索框
-        showSearch_: this.showSearch
+        rotating: false
       };
     },
     computed: {
-      ...mapGetters(['loading', 'searchPageIsShowing'])
+      ...mapGetters(['loading'])
     },
     methods: {
       refresh() {
@@ -55,13 +38,8 @@
       discover() {
         this.$emit('discover');
       },
-      showSearchBar() {
-        this.showSearch_ = true;
+      showSearchPage() {
         this.$router.push('/search');
-      },
-      hideSearchBar() {
-        this.showSearch_ = false;
-        this.$router.back();
       },
       ...mapMutations({
         setRefresh: 'REFRESH'
@@ -85,36 +63,6 @@
 
 <style scoped lang="scss">
   @import "../css/constant";
-
-  .search-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    box-sizing: border-box;
-    width: 100%;
-    background: $bgColor;
-    height: $headHeight;
-    line-height: $headHeight;
-    font-size: $fontSize;
-    .back {
-      width: 20px;
-      height: 20px;
-      padding: 0 3px;
-    }
-    .search {
-      width: 18px;
-      height: 18px;
-      padding: 0 5px;
-    }
-    .box {
-      box-sizing: border-box;
-      height: 20px;
-      flex-grow: 1;
-      border: none;
-      padding-left: 5px;
-      padding-right: 5px;
-    }
-  }
 
   .default-wrapper {
     box-sizing: border-box;
