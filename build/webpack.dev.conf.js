@@ -149,6 +149,33 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           console.log(e);
         });
       });
+
+      app.post('/api/search', function (req, res) {
+        axios({
+          url: req.headers.url,
+          method: 'post',
+          // 表单数据
+          data: {
+            k: decodeURIComponent(req.headers.k)
+          },
+          transformRequest: [function (data) {
+            // Do whatever you want to transform the data
+            let ret = '';
+            for (let it in data) {
+              ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&';
+            }
+            return ret;
+          }],
+          headers: {
+            'Content-Type': req.headers['content-type']
+          }
+        }).then((response) => {
+          res.json(response.data);
+        }, (err) => {
+        }).catch((e) => {
+          console.log(e);
+        });
+      });
     },
     clientLogLevel: 'warning',
     historyApiFallback: {

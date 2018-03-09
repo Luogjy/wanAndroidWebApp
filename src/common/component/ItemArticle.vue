@@ -2,9 +2,10 @@
   <section class="wrapper">
     <a :href="item.link">
       <div class="content">
+        {{item.chapterName}}
         <img v-show="!item.collect" class="collect" src="../img/collect.png">
         <img v-show="item.collect" class="collect" src="../img/collected.png">
-        <span class="title">{{item.title}}</span>
+        <span class="title" v-html="item.title">{{item.title}}</span>
         <span class="chapter">分类：</span>
         <span class="chapter-name" :class="!canOpenChapter?'cannot-open-chapter':''" @click.prevent="toChapterPage">{{item.chapterName}}</span>
         <span class="author">作者：</span>
@@ -134,4 +135,9 @@
 
   }
 
+</style>
+<style lang="css">
+  .highlight {
+    color: #B30000;
+  }
 </style>

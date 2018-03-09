@@ -15,6 +15,39 @@ export function getHotKey() {
   });
 }
 
+/**
+ * 搜索
+ * @param key 关键字
+ * @returns {AxiosPromise}
+ */
+export function searchByKey(key, currentPage) {
+  const url = debug ? '/api/search' : '待定';
+  return axios({
+    url: url,
+    method: 'post',
+    // 表单数据
+    data: {
+      k: key
+    },
+    transformRequest: [function (data) {
+      // Do whatever you want to transform the data
+      let ret = '';
+      for (let it in data) {
+        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&';
+      }
+      return ret;
+    }],
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      // 这两个头仅仅是为了传值给devServer用而已，devServer可以从这里拿值作为data
+      url: `${baseUrl}article/query/${currentPage}/json`,
+      k: encodeURIComponent(key)
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data);
+  });
+}
+
 const SEARCH_HISTORY_KEYS = '__SEARCH_HISTORY_KEYS__';
 const SEARCH_HISTORY_KEYS_MAX_LENGTH = 20;
 
