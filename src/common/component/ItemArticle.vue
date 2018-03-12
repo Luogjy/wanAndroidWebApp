@@ -6,7 +6,16 @@
         <img v-show="item.collect" class="collect" src="../img/collected.png">
         <span class="title" v-html="item.title">{{item.title}}</span>
         <span class="chapter">分类：</span>
-        <span class="chapter-name" :class="!canOpenChapter?'cannot-open-chapter':''" @click.prevent="toChapterPage">{{item.chapterName}}</span>
+        <div class="chapter-name">
+          <!--todo 接口数据有问题，二级跳转下次再搞
+        /
+        <span class="one-chapter-name" :class="!canOpenChapter?'cannot-open-chapter':''"
+              @click.prevent="toOneChapterPage">{{item.superChapterName}}</span>
+           -->
+          <span class="two-chapter-name" :class="!canOpenChapter?'cannot-open-chapter':''"
+                @click.prevent="toTwoChapterPage">{{item.chapterName}}</span>
+
+        </div>
         <span class="author">作者：</span>
         <span class="author-name" :class="!canOpenAuthor?'cannot-open-author':''" @click.prevent="toAuthorPage">{{item.author}}</span>
         <span class="date">{{item.niceDate}}</span>
@@ -39,7 +48,13 @@
 
     },
     methods: {
-      toChapterPage() {
+      toOneChapterPage() {
+        if (this.canOpenChapter) {
+          this.setDefaultOneChapter({chapterId: this.item.superChapterId, chapterName: this.item.superChapterName});
+          this.$router.push('/technologySystem');
+        }
+      },
+      toTwoChapterPage() {
         if (this.canOpenChapter) {
           this.setDefaultTwoChapter({chapterId: this.item.chapterId, chapterName: this.item.chapterName});
           this.$router.push('/technologySystem');
@@ -51,6 +66,7 @@
         }
       },
       ...mapMutations({
+        setDefaultOneChapter: 'DEFAULT_ONE_CHAPTER',
         setDefaultTwoChapter: 'DEFAULT_TWO_CHAPTER'
       })
     },
@@ -106,7 +122,10 @@
         position: absolute;
         left: 65px;
         top: 40px;
-        color: $bgColor;
+        .one-chapter-name,
+        .two-chapter-name {
+          color: $bgColor;
+        }
       }
       .cannot-open-chapter {
         color: $textColor;

@@ -23,6 +23,9 @@ const mutations = {
   // [types.SEARCH_PAGE_IS_SHOWING](state, searchPageIsShowing) {
   //   state.searchPageIsShowing = searchPageIsShowing;
   // },
+  [types.DEFAULT_ONE_CHAPTER](state, defaultOneChapter) {
+    state.defaultOneChapter = defaultOneChapter;
+  },
   [types.DEFAULT_TWO_CHAPTER](state, defaultTwoChapter) {
     state.defaultTwoChapter = defaultTwoChapter;
   }
