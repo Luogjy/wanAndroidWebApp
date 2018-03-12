@@ -2,7 +2,7 @@
   <section>
     <div class="default-wrapper">
       <span class="user-wrapper">
-        <span class="login">登录</span>|<span class="register">注册</span>
+        <span @click="login" class="login">登录</span>|<span class="register">注册</span>
         <span class="user">luogjy</span>
       </span>
       <span class="logo-wrapper">
@@ -40,6 +40,9 @@
       },
       showSearchPage() {
         this.$router.push('/search');
+      },
+      login() {
+        this.$emit('login');
       },
       ...mapMutations({
         setRefresh: 'REFRESH'

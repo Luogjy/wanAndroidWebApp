@@ -12,6 +12,8 @@
     <flow-dialog :title="flowDialogTitle" :items="flowItems" :auto-hide="autoHideFlowDialog"
                  :show-dialog="showFlowDialog" @hideDialog="hideFlowDialogEvent" @userHideDialog="userHideDialogEvent"
                  @selectedItem="selectedItemByFlowDialog"/>
+
+    <!--<center-dialog :showDialog="true"></center-dialog>-->
   </div>
 </template>
 
@@ -19,6 +21,7 @@
   import MyHeader from './common/component/MyHeader';
   import NavBar from './common/component/NavBar';
   import Discover from './common/component/Discover';
+  import CenterDialog from './common/component/CenterDialog';
   import {mapMutations} from 'vuex';
   import {appHeadFunction} from './common/js/mixin';
 
@@ -90,7 +93,7 @@
       })
     },
     components: {
-      MyHeader, NavBar, Discover
+      MyHeader, NavBar, Discover, CenterDialog
     }
   };
 </script>
