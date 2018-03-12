@@ -217,6 +217,9 @@ export const appHeadFunction = {
         this.setFlowDialogTitleAndItemsAndSelectType('联系我们', contactUs, this.SELECT_TYPE.CONTACT_US);
       }
     },
+    toLoginRegister() {
+      this.$router.push('/loginRegister');
+    },
     ...mapMutations({
       setDefaultTwoChapter: 'DEFAULT_TWO_CHAPTER'
     })

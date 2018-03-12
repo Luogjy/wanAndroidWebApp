@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <my-header @discover="showDiscoverDialog" class="my-header"/>
+    <my-header class="my-header" @discover="showDiscoverDialog" @login="toLoginRegister"/>
     <discover :show-discover="isShowDiscoverDialog" @hideDiscover="hideDiscoverDialog" @clickNav="clickNav"
               @clickTool="clickTool" @clickWebsite="clickWebsite" @clickContactUs="clickContactUs"/>
     <article>
@@ -13,7 +13,6 @@
                  :show-dialog="showFlowDialog" @hideDialog="hideFlowDialogEvent" @userHideDialog="userHideDialogEvent"
                  @selectedItem="selectedItemByFlowDialog"/>
 
-    <!--<center-dialog :showDialog="true"></center-dialog>-->
   </div>
 </template>
 
@@ -21,7 +20,6 @@
   import MyHeader from './common/component/MyHeader';
   import NavBar from './common/component/NavBar';
   import Discover from './common/component/Discover';
-  import CenterDialog from './common/component/CenterDialog';
   import {mapMutations} from 'vuex';
   import {appHeadFunction} from './common/js/mixin';
 
@@ -93,7 +91,7 @@
       })
     },
     components: {
-      MyHeader, NavBar, Discover, CenterDialog
+      MyHeader, NavBar, Discover
     }
   };
 </script>

@@ -6,6 +6,7 @@ import Project from '../components/project/Project';
 import Collection from '../components/collection/Collection';
 import Author from '../components/author/Author';
 import Search from '../components/search/Search';
+import LoginRegister from '../components/loginRegister/LoginRegister';
 
 Vue.use(Router);
 
@@ -38,6 +39,10 @@ export default new Router({
     {
       path: '/search',
       component: Search
+    },
+    {
+      path: '/loginRegister',
+      component: LoginRegister
     }
   ]
 });

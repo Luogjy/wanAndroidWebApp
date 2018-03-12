@@ -28,6 +28,10 @@
       title: {
         type: String,
         default: ''
+      },
+      dialogTop: {
+        type: Number,
+        default: -999999
       }
     },
     methods: {
