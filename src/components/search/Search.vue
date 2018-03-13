@@ -81,7 +81,6 @@
               this.articles = [];
             }
             this.articles = this.articles.concat(res.data.datas);
-            console.log(this.articles);
             this.pageCount = res.data.pageCount;
             this.nextPage++;
             this.showToast({text: this.articles.length ? '为你找到了这些~' : '没有数据 ╮(╯▽╰)╭'}); // 使用Toast组件【4】
@@ -101,7 +100,6 @@
       },
       selectKey(item) {
         this.theKey = item;
-        console.log('selectKey');
         this.toSearchKey(item);
       },
       _touchBottom(newValue, oldValue) {

@@ -11,7 +11,6 @@ export function getTechnologySystem() {
   return axios.get(url, {
     params: {url: `${baseUrl}tree/json`}
   }).then((res) => { // res是本次请求返回的整个响应数据，包含状态码status
-    console.log(res.data);
     return Promise.resolve(res.data); // 只要响应体，顺便转为 Promise 对象
   });
 }
