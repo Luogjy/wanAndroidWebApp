@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <my-header class="my-header" @discover="showDiscoverDialog" @login="toLoginRegister"/>
+    <my-header class="my-header" @discover="showDiscoverDialog"/>
     <discover :show-discover="isShowDiscoverDialog" @hideDiscover="hideDiscoverDialog" @clickNav="clickNav"
               @clickTool="clickTool" @clickWebsite="clickWebsite" @clickContactUs="clickContactUs"/>
     <article>

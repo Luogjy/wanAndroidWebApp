@@ -1,17 +1,13 @@
 <template>
   <section>
     <div class="default-wrapper">
-      <span class="user-wrapper">
-        <span @click="login" class="login">登录</span>|<span class="register">注册</span>
-        <span class="user">luogjy</span>
-      </span>
+      <span @click="discover" class="discover">发现</span>
       <span class="logo-wrapper">
         <img class="logo" src="../img/logo.png"/>
         <span class="app-name">玩Android</span>
         <img class="refresh" :class="rotating?'loading':''" src="../img/refresh.png" @click="refresh">
       </span>
       <span class="right-wrapper">
-        <span @click="discover" class="discover">发现</span>
         <img class="search" src="../img/search.png" @click="showSearchPage"/>
       </span>
     </div>
@@ -40,9 +36,6 @@
       },
       showSearchPage() {
         this.$router.push('/search');
-      },
-      login() {
-        this.$emit('login');
       },
       ...mapMutations({
         setRefresh: 'REFRESH'
@@ -76,21 +69,12 @@
     color: #ffffff;
     font-size: $fontSize;
     position: relative;
-    .user-wrapper {
-      float: left;
-      margin-left: 8px;
-      .login {
-        margin-right: 10px;
-      }
-      .register {
-        margin-left: 10px;
-      }
-      .user {
-        display: none;
-      }
-      .box {
-
-      }
+    .discover {
+      display: inline-block;
+      padding-left: 10px;
+      padding-right: 10px;
+      height: $headHeight;
+      line-height: $headHeight;
     }
     .right-wrapper {
       float: right;
