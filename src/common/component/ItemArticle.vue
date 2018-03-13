@@ -8,9 +8,10 @@
         <span class="chapter">分类：</span>
         <div class="chapter-name">
           <span class="one-chapter-name" :class="!canOpenChapter?'cannot-open-chapter':''"
-                @click.prevent="clickOneChapter">{{item.superChapterName}}</span>/<span class="two-chapter-name"
-                                                                                        :class="!canOpenChapter?'cannot-open-chapter':''"
-                                                                                        @click.prevent="clickTwoChapter">{{item.chapterName}}</span>
+                @click.prevent="clickOneChapter">{{item.superChapterName}}</span>{{!item.superChapterName&&!item.chapterName?'---':'/'}}<span
+          class="two-chapter-name"
+          :class="!canOpenChapter?'cannot-open-chapter':''"
+          @click.prevent="clickTwoChapter">{{item.chapterName}}</span>
         </div>
         <span class="author">作者：</span>
         <span class="author-name" :class="!canOpenAuthor?'cannot-open-author':''" @click.prevent="toAuthorPage">{{item.author}}</span>
