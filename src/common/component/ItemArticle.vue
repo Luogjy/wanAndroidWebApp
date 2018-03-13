@@ -7,14 +7,10 @@
         <span class="title" v-html="item.title">{{item.title}}</span>
         <span class="chapter">分类：</span>
         <div class="chapter-name">
-          <!--todo 接口数据有问题，二级跳转下次再搞
-        /
-        <span class="one-chapter-name" :class="!canOpenChapter?'cannot-open-chapter':''"
-              @click.prevent="toOneChapterPage">{{item.superChapterName}}</span>
-           -->
-          <span class="two-chapter-name" :class="!canOpenChapter?'cannot-open-chapter':''"
-                @click.prevent="toTwoChapterPage">{{item.chapterName}}</span>
-
+          <span class="one-chapter-name" :class="!canOpenChapter?'cannot-open-chapter':''"
+                @click.prevent="clickOneChapter">{{item.superChapterName}}</span>/<span class="two-chapter-name"
+                                                                                        :class="!canOpenChapter?'cannot-open-chapter':''"
+                                                                                        @click.prevent="clickTwoChapter">{{item.chapterName}}</span>
         </div>
         <span class="author">作者：</span>
         <span class="author-name" :class="!canOpenAuthor?'cannot-open-author':''" @click.prevent="toAuthorPage">{{item.author}}</span>
@@ -48,13 +44,14 @@
 
     },
     methods: {
-      toOneChapterPage() {
+      clickOneChapter() {
         if (this.canOpenChapter) {
-          this.setDefaultOneChapter({chapterId: this.item.superChapterId, chapterName: this.item.superChapterName});
+          // superChapterName是一级分类名称，superChapterId是该一级分类下第一个子类目
+          this.setDefaultTwoChapter({chapterId: this.item.superChapterId, chapterName: ''});
           this.$router.push('/technologySystem');
         }
       },
-      toTwoChapterPage() {
+      clickTwoChapter() {
         if (this.canOpenChapter) {
           this.setDefaultTwoChapter({chapterId: this.item.chapterId, chapterName: this.item.chapterName});
           this.$router.push('/technologySystem');
@@ -66,7 +63,6 @@
         }
       },
       ...mapMutations({
-        setDefaultOneChapter: 'DEFAULT_ONE_CHAPTER',
         setDefaultTwoChapter: 'DEFAULT_TWO_CHAPTER'
       })
     },
@@ -126,10 +122,11 @@
         .two-chapter-name {
           color: $bgColor;
         }
+        .cannot-open-chapter {
+          color: $textColor;
+        }
       }
-      .cannot-open-chapter {
-        color: $textColor;
-      }
+
       .author {
         position: absolute;
         left: 30px;

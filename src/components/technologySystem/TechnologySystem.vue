@@ -54,7 +54,7 @@
       };
     },
     computed: {
-      ...mapGetters(['defaultTwoChapter', 'defaultOneChapter'])
+      ...mapGetters(['defaultTwoChapter'])
     },
     created() {
       this._getTechnologySystem();
@@ -66,28 +66,8 @@
       if (this.defaultTwoChapter) {
         this.useDefaultTwoChapter();
       }
-      if (this.defaultOneChapter) {
-        this.useDefaultOneChapter();
-      }
     },
     methods: {
-      // 使用从其他地方带过来的指定二级分类
-      useDefaultOneChapter() { // todo 接口数据有问题，二级跳转下次再搞
-        for (let i = 0; i < this.systems.length; i++) {
-          let one = this.systems[i];
-          if (one.id === this.defaultOneChapter.chapterId) {
-            this.selectedOneChapter = JSON.parse(JSON.stringify(one));
-            this.selectedOneChapter.position = i;
-            if (this.selectedOneChapter.children.length > 0) {
-              this.selectedTwoChapter = this.selectedOneChapter.children[0];
-              this.selectedTwoChapter.position = 0;
-            }
-            this.setDefaultOneChapter(null);
-            this.refreshArticleList();
-            return;
-          }
-        }
-      },
       // 使用从其他地方带过来的指定二级分类
       useDefaultTwoChapter() {
         for (let i = 0; i < this.systems.length; i++) {
@@ -113,8 +93,6 @@
             if (this.systems.length > 0) {
               if (this.defaultTwoChapter) { // 从其他地方带着指定分类过来
                 this.useDefaultTwoChapter();
-              } else if (this.defaultOneChapter) {
-                this.useDefaultOneChapter();
               } else { // 并没有从其他地方带着指定分类过来
                 this.selectedOneChapter = JSON.parse(JSON.stringify(this.systems[0]));
                 this.selectedOneChapter.position = 0;
@@ -245,7 +223,6 @@
         }
       },
       ...mapMutations({
-        setDefaultOneChapter: 'DEFAULT_ONE_CHAPTER',
         setDefaultTwoChapter: 'DEFAULT_TWO_CHAPTER'
       })
     },

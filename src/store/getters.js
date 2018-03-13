@@ -8,7 +8,6 @@ export const loading = state => state.loading;
 
 // export const searchPageIsShowing = state => state.searchPageIsShowing;
 
-export const defaultOneChapter = state => state.defaultOneChapter;
 export const defaultTwoChapter = state => state.defaultTwoChapter;
 
 // export const theSearchKey = state => state.theSearchKey;
