@@ -40,7 +40,7 @@ export function searchByKey(key, currentPage) {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       // 这两个头仅仅是为了传值给devServer用而已，devServer可以从这里拿值作为data
-      url: `${baseUrl}article/query/${currentPage}/json`,
+      url: `${baseUrl}article/query/${currentPage - 1}/json`,
       k: encodeURIComponent(key)
     }
   }).then((res) => {

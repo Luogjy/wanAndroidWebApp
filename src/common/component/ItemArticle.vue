@@ -153,6 +153,6 @@
 </style>
 <style lang="css">
   .highlight {
-    color: #B30000;
+    color: #B20000;
   }
 </style>

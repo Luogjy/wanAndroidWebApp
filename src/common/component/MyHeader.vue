@@ -12,7 +12,7 @@
       </span>
       <span class="right-wrapper">
         <span @click="discover" class="discover">发现</span>
-        <img v-show="false" class="search" src="../img/search.png" @click="showSearchPage"/>
+        <img class="search" src="../img/search.png" @click="showSearchPage"/>
       </span>
     </div>
   </section>
