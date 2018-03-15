@@ -7,7 +7,7 @@ import axios from 'axios';
  * @returns {Promise<any>}
  */
 export function getProjectTree() {
-  const url = debug ? '/api/getProjectTree' : '待定';
+  const url = debug ? '/api/getProjectTree' : 'http://www.luogjy.xyz/api/getProjectTree';
   return axios.get(url, {
 
     params: {url: `${baseUrl}project/tree/json`}
@@ -23,7 +23,7 @@ export function getProjectTree() {
  * @returns {Promise<any>}
  */
 export function getProjectList(currentPage, cid) {
-  const url = debug ? '/api/getProjectList' : '待定';
+  const url = debug ? '/api/getProjectList' : 'http://www.luogjy.xyz/api/getProjectList';
   return axios.get(url, {
     params: {url: `${baseUrl}project/list/${currentPage}/json?cid=${cid}`}
   }).then((res) => {

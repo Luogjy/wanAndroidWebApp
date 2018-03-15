@@ -7,7 +7,7 @@ import axios from 'axios';
  * @returns {Promise<any>}
  */
 export function getTechnologySystem() {
-  const url = debug ? '/api/getTechnologySystem' : '待定';
+  const url = debug ? '/api/getTechnologySystem' : 'http://www.luogjy.xyz/api/getTechnologySystem';
   return axios.get(url, {
     params: {url: `${baseUrl}tree/json`}
   }).then((res) => { // res是本次请求返回的整个响应数据，包含状态码status
@@ -22,7 +22,7 @@ export function getTechnologySystem() {
  * @returns {Promise<any>}
  */
 export function getArticleList(currentPage, cid) {
-  const url = debug ? '/api/getArticleListByTechnologySystem' : '待定';
+  const url = debug ? '/api/getArticleListByTechnologySystem' : 'http://www.luogjy.xyz/api/getArticleListByTechnologySystem';
   return axios.get(url, {
     params: {url: `${baseUrl}article/list/${currentPage - 1}/json?cid=${cid}`}
   }).then((res) => { // res是本次请求返回的整个响应数据，包含状态码status

@@ -7,7 +7,7 @@ import storage from 'good-storage'; // localStorage 使用第三方库 https://g
  * @returns {Promise<any>}
  */
 export function getHotKey() {
-  const url = debug ? '/api/getHotKey' : '待定';
+  const url = debug ? '/api/getHotKey' : 'http://www.luogjy.xyz/api/getHotKey';
   return axios.get(url, {
     params: {url: `${baseUrl}hotkey/json`}
   }).then((res) => { // res是本次请求返回的整个响应数据，包含状态码status
@@ -21,7 +21,7 @@ export function getHotKey() {
  * @returns {AxiosPromise}
  */
 export function searchByKey(key, currentPage) {
-  const url = debug ? '/api/search' : '待定';
+  const url = debug ? '/api/search' : 'http://www.luogjy.xyz/api/search';
   return axios({
     url: url,
     method: 'post',
