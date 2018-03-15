@@ -6,7 +6,7 @@ import axios from 'axios';
  * @returns {Promise<any>}
  */
 export function getOftenVisitWebsiteList() {
-  const url = debug ? '/api/getOftenVisitWebsiteList' : 'http://www.luogjy.xyz/api/getOftenVisitWebsiteList';
+  const url = debug ? '/api/getOftenVisitWebsiteList' : 'http://luogjytest.top/api/getOftenVisitWebsiteList';
 
   return axios.get(url, {
     params: {url: `${baseUrl}friend/json`}

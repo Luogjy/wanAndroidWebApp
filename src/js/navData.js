@@ -6,7 +6,7 @@ import axios from 'axios';
  * @returns {Promise<any>}
  */
 export function getNavDatas() {
-  const url = debug ? '/api/getNavDatas' : 'http://www.luogjy.xyz/api/getNavDatas';
+  const url = debug ? '/api/getNavDatas' : 'http://luogjytest.top/api/getNavDatas';
 
   return axios.get(url, {
     params: {url: `${baseUrl}navi/json`}

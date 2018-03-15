@@ -7,7 +7,7 @@ import axios from 'axios';
  * @returns {Promise<any>}
  */
 export function getArticleList(currentPage) {
-  const url = debug ? '/api/getArticleList' : 'http://www.luogjy.xyz/api/getArticleList';
+  const url = debug ? '/api/getArticleList' : 'http://luogjytest.top/api/getArticleList';
   return axios.get(url, {
     params: {url: `${baseUrl}article/list/${currentPage - 1}/json`}
   }).then((res) => { // res是本次请求返回的整个响应数据，包含状态码status
@@ -16,7 +16,7 @@ export function getArticleList(currentPage) {
 }
 
 export function getBannerList() {
-  const url = debug ? '/api/getBannerList' : 'http://www.luogjy.xyz/api/getBannerList';
+  const url = debug ? '/api/getBannerList' : 'http://luogjytest.top/api/getBannerList';
   return axios.get(url, {
     params: {url: `${baseUrl}banner/json`}
   }).then((res) => {

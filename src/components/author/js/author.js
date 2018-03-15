@@ -8,7 +8,7 @@ import axios from 'axios';
  * @returns {Promise<any>}
  */
 export function getAuthorArticleList(currentPage, author) {
-  const url = debug ? '/api/getAuthorArticleList' : 'http://www.luogjy.xyz/api/getAuthorArticleList';
+  const url = debug ? '/api/getAuthorArticleList' : 'http://luogjytest.top/api/getAuthorArticleList';
 
   return axios.get(url, {
     params: {url: `${baseUrl}article/list/${currentPage - 1}/json?author=${author}`}
