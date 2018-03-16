@@ -12,7 +12,8 @@
 本项目是以Vue为框架基础，结合Vue-router、Vuex、axios、ES6编写的单页应用，跨域通过服务器代理解决，项目使用vue-cli脚手架构建并添加了自适应。
 
 #### 项目链接
-地址：luogjytest.top
+>地址：luogjytest.top
+
 这是个移动端的webAPP，因此建议用手机浏览器打开。
 
 #### TODO
@@ -28,12 +29,12 @@
 ![Alt text](shotcut/lu1.gif)
 
 #### 声明
-本项目API均由[玩Android](http://www.wanandroid.com/)提供。
-本项目仅供学习交流，不可用于任何商业用途。
+* 本项目API均由[玩Android](http://www.wanandroid.com/)提供。
+* 本项目仅供学习交流，不可用于任何商业用途。
 
 #### Thanks
-[鸿洋大神的博客](http://blog.csdn.net/lmj623565791/)
-[玩Android](http://www.wanandroid.com/)
+* [鸿洋大神的博客](http://blog.csdn.net/lmj623565791/)
+* [玩Android](http://www.wanandroid.com/)
 
 #### 我的博客
 [Luogjy](https://segmentfault.com/u/luogjy)
