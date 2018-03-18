@@ -8,7 +8,9 @@
             <span class="abstract">{{item.desc}}</span>
           </div>
           <div class="right">
-            <img :src="item.envelopePic">
+            <!--<img :src="item.envelopePic">-->
+            <!--【图片懒加载】【3】-->
+            <img v-lazy="item.envelopePic">
           </div>
         </div>
         <div class="below">

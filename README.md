@@ -13,7 +13,7 @@
 
 #### 技术栈：
 本项目是以Vue为框架基础，结合Vue-router、Vuex、axios、ES6编写的单页应用。样式表使用了Sass预处理器，跨域通过服务端代理解决，项目使用vue-cli脚手架构建并添加了自适应。
-另外，代理服务端是用nodejs写的。
+另外，代理服务端是用nodejs、express、axios写的。
 
 #### 项目链接
 >地址：`http://luogjytest.top`
