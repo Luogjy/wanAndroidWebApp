@@ -4,7 +4,10 @@
       <div class="content">
         <img v-show="!item.collect" class="collect" src="../img/collect.png">
         <img v-show="item.collect" class="collect" src="../img/collected.png">
-        <span class="title" v-html="item.title">{{item.title}}</span>
+        <div class="title-wrapper">
+          <span v-if="item.fresh" class="fresh">新</span>
+          <span class="title" v-html="item.title">{{item.title}}</span>
+        </div>
         <span class="chapter">分类：</span>
         <div class="chapter-name">
           <span class="one-chapter-name" :class="!canOpenChapter?'cannot-open-chapter':''"
@@ -75,6 +78,7 @@
   @import "../css/constant";
 
   $textColor: #767676;
+  $titleFontSize: 16px;
   .wrapper {
     box-sizing: border-box;
     width: 100%;
@@ -99,16 +103,25 @@
         top: 8px;
         left: 8px;
       }
-      .title {
-        display: inline-block;
+      .title-wrapper {
         position: absolute;
-        font-size: 16px;
         left: 30px;
         right: 8px;
         top: 10px;
+        height: $titleFontSize;
+        line-height: $titleFontSize;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        .fresh {
+          position: relative;
+          top: -5px;
+          color: red;
+          font-size: 10px;
+        }
+        .title {
+          font-size: $titleFontSize;
+        }
       }
       .chapter {
         position: absolute;
