@@ -21,6 +21,7 @@
   import ItemProject from '../../common/component/ItemProject';
   import {getProjectTree, getProjectList} from './js/project';
   import {baseFunction} from '../../common/js/mixin';
+  import {mapGetters, mapMutations} from 'vuex';
 
   export default {
     mixins: [baseFunction],
@@ -43,7 +44,27 @@
     mounted() {
       this.initToastTop(this.$refs.listWrapper.getBoundingClientRect().top);
     },
+    activated() {
+      if (this.defaultProjectChapter) {
+        this.useDefaultProjectChapter();
+      }
+    },
     methods: {
+      useDefaultProjectChapter() {
+        for (let i = 0; i < this.chapters.length; i++) {
+          let item = this.chapters[i];
+          console.log('this.defaultProjectChapter.chapterId-' + this.defaultProjectChapter.chapterId);
+          console.log('item.id-' + item.id);
+          if (item.id === this.defaultProjectChapter.chapterId) {
+            console.log('进来了');
+            this.selectedChapter = item;
+            this.selectedChapter.position = i;
+            this.setDefaultProjectChapter(null);
+            this.refreshProjectList();
+            return;
+          }
+        }
+      },
       _getProjectList() {
         if (this.nextPage > this.pageCount) {
           this.showToast({text: '已经到底了'});
@@ -72,9 +93,13 @@
           if (res.errorCode >= 0) {
             this.chapters = res.data;
             if (this.chapters.length > 0) {
-              this.selectedChapter = this.chapters[0];
-              this.selectedChapter.position = 0;
-              this._getProjectList();
+              if (this.defaultProjectChapter) { // 从其他地方带着指定分类过来
+                this.useDefaultProjectChapter();
+              } else {
+                this.selectedChapter = this.chapters[0];
+                this.selectedChapter.position = 0;
+                this._getProjectList();
+              }
             }
           }
         });
@@ -127,7 +152,13 @@
       },
       toSelectChapter() {
         this._toSelectChapter();
-      }
+      },
+      ...mapMutations({
+        setDefaultProjectChapter: 'DEFAULT_PROJECT_CHAPTER'
+      })
+    },
+    computed: {
+      ...mapGetters(['defaultProjectChapter'])
     },
     components: {
       ItemProject, FlowDialog

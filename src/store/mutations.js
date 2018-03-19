@@ -25,6 +25,9 @@ const mutations = {
   // },
   [types.DEFAULT_TWO_CHAPTER](state, defaultTwoChapter) {
     state.defaultTwoChapter = defaultTwoChapter;
+  },
+  [types.DEFAULT_PROJECT_CHAPTER](state, defaultProjectChapter) {
+    state.defaultProjectChapter = defaultProjectChapter;
   }
   // [types.THE_SEARCH_KEY](state, theSearchKey) {
   //   state.theSearchKey = theSearchKey;

@@ -5,8 +5,10 @@ const state = {
   // searchPageIsShowing: false,
   // 在其他地方传给体系页的二级分类，结构为  {'chapterId': 294, 'chapterName': '完整项目'}，在体系页拿到值后就马上置null
   defaultTwoChapter: null,
+  // 在其他地方传给项目页的分类，结构为  {'chapterId': 294, 'chapterName': '完整项目'}，在项目页拿到值后就马上置null
+  defaultProjectChapter: null
 
-  theSearchKey: ''
+  // theSearchKey: ''
 };
 
 export default state;

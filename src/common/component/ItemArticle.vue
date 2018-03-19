@@ -18,6 +18,13 @@
         </div>
         <span class="author">作者：</span>
         <span class="author-name" :class="!canOpenAuthor?'cannot-open-author':''" @click.prevent="toAuthorPage">{{item.author}}</span>
+        <div class="tags">
+          <!--因为不知道到底API中提供了多少种tag（作者没有说明），为了精确控制显示的tag都能点击有行为，就加个tag.name的条件判断一下-->
+          <div v-if="tag.name==='项目'" class="tag-wrapper" :key="index" v-for="(tag,index) in item.tags"
+               @click.prevent="clickTag(tag)">
+            <span class="tag">{{tag.name}}</span>
+          </div>
+        </div>
         <span class="date">{{item.niceDate}}</span>
       </div>
     </a>
@@ -66,8 +73,31 @@
           this.$router.push(`/author/${this.item.author}`);
         }
       },
+      // 是否项目
+      isProject(tag) {
+        // "url": "/project/list/1?cid=333"
+        return tag.name === '项目';
+      },
+      // 是否导航
+      isNav(tag) {
+        // "url": "/navi#281"
+        return tag.name === '导航';
+      },
+      clickTag(tag) {
+        if (this.isProject(tag)) {
+          this.setDefaultProjectChapter({
+            chapterId: tag.url.slice(tag.url.indexOf('cid=') + 4) - 0, // 减0是为了把值转化为数字
+            chapterName: tag.name
+          });
+          this.$router.push('/project');
+        }
+        if (this.isNav(tag)) {
+
+        }
+      },
       ...mapMutations({
-        setDefaultTwoChapter: 'DEFAULT_TWO_CHAPTER'
+        setDefaultTwoChapter: 'DEFAULT_TWO_CHAPTER',
+        setDefaultProjectChapter: 'DEFAULT_PROJECT_CHAPTER'
       })
     },
     name: 'item-article'
@@ -151,6 +181,40 @@
         left: 65px;
         top: 60px;
         color: $bgColor;
+      }
+      .tags {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        position: absolute;
+        left: 30px;
+        top: 80px;
+        .tag-wrapper {
+          width: 30px;
+          height: 14px;
+          position: relative;
+          text-align: center;
+          margin-right: 10px;
+          .tag {
+            color: green;
+            line-height: 14px;
+            text-align: center;
+            font-size: 12px;
+          }
+          &:after {
+            content: "";
+            border: 1px green solid;
+            border-radius: 4px;
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -1px;
+            left: 0;
+            transform-origin: left top;
+            transform: scale(0.5);
+          }
+        }
+
       }
       .cannot-open-author {
         color: $textColor;

@@ -10,4 +10,6 @@ export const loading = state => state.loading;
 
 export const defaultTwoChapter = state => state.defaultTwoChapter;
 
+export const defaultProjectChapter = state => state.defaultProjectChapter;
+
 // export const theSearchKey = state => state.theSearchKey;
