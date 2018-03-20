@@ -12,4 +12,6 @@ export const defaultTwoChapter = state => state.defaultTwoChapter;
 
 export const defaultProjectChapter = state => state.defaultProjectChapter;
 
+export const defaultOneNavData = state => state.defaultOneNavData;
+
 // export const theSearchKey = state => state.theSearchKey;

@@ -110,6 +110,9 @@ export const appHeadFunction = {
       ANDROID_INTERVIEW: 'http://www.wanandroid.com/article/list/0?cid=73'
     };
   },
+  computed: {
+    ...mapGetters(['defaultOneNavData'])
+  },
   mounted() {
     this._getNavDatas();
     this._getOftenVisitWebsiteList();
@@ -119,6 +122,28 @@ export const appHeadFunction = {
       this.flowDialogTitle = title;
       this.flowItems = items;
       this.selectType = type;
+    },
+    // 使用指定的导航分类
+    useDefaultOneNavDataAndShowFlowDialog(navDatas) {
+      for (let i = 0; i < navDatas.length; i++) {
+        let item = navDatas[i];
+        if (item.cid === this.defaultOneNavData.id) {
+          this.selectType = this.SELECT_TYPE.ONE_NAV;
+          this.selectedItemByFlowDialog({item, index: i});
+          this.setDefaultOneNavData(null);
+          return;
+        }
+      }
+    },
+    // 用FlowDialog展示导航数据
+    showFlowDialogForNavDatas(navDatas) {
+      if (!this.flowDialogIsBusing) {
+        if (this.defaultOneNavData) { // 直接选择了某个导航分类
+          this.useDefaultOneNavDataAndShowFlowDialog(navDatas);
+        } else {
+          this.setFlowDialogTitleAndItemsAndSelectType('导航分类', navDatas, this.SELECT_TYPE.ONE_NAV);
+        }
+      }
     },
     // 获取导航数据
     _getNavDatas(showDialog = false) {
@@ -132,15 +157,11 @@ export const appHeadFunction = {
         getNavDatas().then((res) => {
           if (res.errorCode === 0) {
             this.navDatas = res.data;
-            if (!this.flowDialogIsBusing) {
-              this.setFlowDialogTitleAndItemsAndSelectType('导航分类', this.navDatas, this.SELECT_TYPE.ONE_NAV);
-            }
+            this.showFlowDialogForNavDatas(this.navDatas);
           }
         });
       } else {
-        if (!this.flowDialogIsBusing) {
-          this.setFlowDialogTitleAndItemsAndSelectType('导航分类', this.navDatas, this.SELECT_TYPE.ONE_NAV);
-        }
+        this.showFlowDialogForNavDatas(this.navDatas);
       }
     },
     // 获取常用网站
@@ -218,12 +239,18 @@ export const appHeadFunction = {
       }
     },
     ...mapMutations({
-      setDefaultTwoChapter: 'DEFAULT_TWO_CHAPTER'
+      setDefaultTwoChapter: 'DEFAULT_TWO_CHAPTER',
+      setDefaultOneNavData: 'DEFAULT_ONE_NAV_DATA'
     })
   },
   watch: {
     showFlowDialog(newValue, oldValue) {
       this.flowDialogIsBusing = newValue;
+    },
+    defaultOneNavData(newValue, oldValue) {
+      if (newValue) {
+        this._getNavDatas(true);
+      }
     }
   },
   components: {

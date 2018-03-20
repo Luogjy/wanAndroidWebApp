@@ -28,6 +28,9 @@ const mutations = {
   },
   [types.DEFAULT_PROJECT_CHAPTER](state, defaultProjectChapter) {
     state.defaultProjectChapter = defaultProjectChapter;
+  },
+  [types.DEFAULT_ONE_NAV_DATA](state, defaultOneNavData) {
+    state.defaultOneNavData = defaultOneNavData;
   }
   // [types.THE_SEARCH_KEY](state, theSearchKey) {
   //   state.theSearchKey = theSearchKey;

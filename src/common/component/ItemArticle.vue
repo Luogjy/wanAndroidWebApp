@@ -91,12 +91,16 @@
           this.$router.push('/project');
         }
         if (this.isNav(tag)) {
-
+          this.setDefaultOneNavData({
+            id: tag.url.slice(tag.url.indexOf('navi#') + 5) - 0,
+            name: ''
+          });
         }
       },
       ...mapMutations({
         setDefaultTwoChapter: 'DEFAULT_TWO_CHAPTER',
-        setDefaultProjectChapter: 'DEFAULT_PROJECT_CHAPTER'
+        setDefaultProjectChapter: 'DEFAULT_PROJECT_CHAPTER',
+        setDefaultOneNavData: 'DEFAULT_ONE_NAV_DATA'
       })
     },
     name: 'item-article'
@@ -109,6 +113,10 @@
   $textColor: #767676;
   $titleFontSize: 16px;
   .wrapper {
+    a {
+      /*点击效果设置为全透明*/
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
     box-sizing: border-box;
     width: 100%;
     padding-left: 5px;

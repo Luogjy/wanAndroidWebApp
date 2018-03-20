@@ -58,7 +58,8 @@
     color: $textColor;
     font-size: $fontSize;
     a {
-      text-decoration: none;
+      /*点击效果设置为全透明*/
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       .content {
         display: flex;
         flex-direction: column;
