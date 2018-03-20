@@ -27,7 +27,9 @@ export function searchByKey(key, currentPage) {
     method: 'post',
     // 表单数据
     data: {
-      k: key
+      k: key,
+      // 仅仅是为了传个实际地址给代理服务器
+      targetUrl: `${baseUrl}article/query/${currentPage - 1}/json`
     },
     transformRequest: [function (data) {
       // Do whatever you want to transform the data
@@ -38,10 +40,7 @@ export function searchByKey(key, currentPage) {
       return ret;
     }],
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      // 这两个头仅仅是为了传值给devServer用而已，devServer可以从这里拿值作为data
-      url: `${baseUrl}article/query/${currentPage - 1}/json`,
-      k: encodeURIComponent(key)
+      'Content-Type': 'application/x-www-form-urlencoded'
     }
   }).then((res) => {
     return Promise.resolve(res.data);

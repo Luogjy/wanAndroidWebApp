@@ -12,6 +12,8 @@ const portfinder = require('portfinder');
 const axios = require('axios');
 const HOST = process.env.HOST;
 const PORT = process.env.PORT && Number(process.env.PORT);
+const bodyParser = require('body-parser');
+
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -24,6 +26,9 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   devServer: {
     // 【接口代理（原理是本地服务器向远程服务器请求）】
     before(app) {
+      app.use(bodyParser.json()); // for parsing application/json
+      app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
+
       app.get('/api/getArticleList'/* 代理接口 */, function (req, res) {
         const url = req.query.url; // 通过参数把真正的url带过来用，嗯，没毛病
         axios.get(url, {
@@ -151,12 +156,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       });
 
       app.post('/api/search', function (req, res) {
+        console.log('search', req.body);
         axios({
-          url: req.headers.url,
+          url: req.body.targetUrl,
           method: 'post',
           // 表单数据
           data: {
-            k: decodeURIComponent(req.headers.k)
+            k: req.body.k
           },
           transformRequest: [function (data) {
             // Do whatever you want to transform the data
