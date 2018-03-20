@@ -179,7 +179,7 @@ export const appHeadFunction = {
         item.articles.forEach((_item, _index) => {
           _item.name = _item.title;
         });
-        this.setFlowDialogTitleAndItemsAndSelectType(item.name, item.articles, this.SELECT_TYPE.TWO_NAV);
+        this.setFlowDialogTitleAndItemsAndSelectType('[导航] ' + item.name, item.articles, this.SELECT_TYPE.TWO_NAV);
       } else if (this.selectType === this.SELECT_TYPE.TWO_NAV) {
         window.open(item.link); // 打开新页面
       } else if (this.selectType === this.SELECT_TYPE.TOOLS) {
