@@ -114,6 +114,7 @@
   $titleFontSize: 16px;
   .wrapper {
     a {
+      text-decoration: none;
       /*点击效果设置为全透明*/
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }

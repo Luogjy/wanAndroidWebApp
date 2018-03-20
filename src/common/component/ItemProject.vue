@@ -58,6 +58,8 @@
     color: $textColor;
     font-size: $fontSize;
     a {
+      /*有些浏览器不加也不会显示下划线，有些却会有下划线，例如QQ打开连接的时候*/
+      text-decoration: none;
       /*点击效果设置为全透明*/
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       .content {
