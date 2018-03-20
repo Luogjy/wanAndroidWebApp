@@ -19,8 +19,7 @@
         <span class="author">作者：</span>
         <span class="author-name" :class="!canOpenAuthor?'cannot-open-author':''" @click.prevent="toAuthorPage">{{item.author}}</span>
         <div class="tags">
-          <!--因为不知道到底API中提供了多少种tag（作者没有说明），为了精确控制显示的tag都能点击有行为，就加个tag.name的条件判断一下-->
-          <div v-if="tag.name==='项目'" class="tag-wrapper" :key="index" v-for="(tag,index) in item.tags"
+          <div class="tag-wrapper" :key="index" v-for="(tag,index) in item.tags"
                @click.prevent="clickTag(tag)">
             <span class="tag">{{tag.name}}</span>
           </div>
