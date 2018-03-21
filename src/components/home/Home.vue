@@ -3,32 +3,25 @@
     <!--使用Toast组件【2】-->
     <toast :show-option="toastOption"/>
     <div ref="bannerWrapper" class="banner-wrapper">
-      <div class="left">
-        <swiper :options="swiperOption" class="my-swiper">
-          <swiper-slide class="my-slide" :key="index" v-for="(item,index) in banners">
-            <a :href="item.url">
-              <img :src="item.imagePath" alt="">
-            </a>
-          </swiper-slide>
-          <div class="swiper-pagination" slot="pagination"></div>
-        </swiper>
-      </div>
-      <div class="right"></div>
+      <slide v-if="banners.length">
+        <div :key="index" v-for="(item,index) in banners">
+          <a :href="item.url">
+            <img :src="item.imagePath" alt="">
+          </a>
+        </div>
+      </slide>
     </div>
     <div>
-      <div>
-        <item-article :item="item" :key="index" v-for="(item,index) in articles"/>
-      </div>
+      <item-article :item="item" :key="index" v-for="(item,index) in articles"/>
     </div>
   </section>
 </template>
 
 <script>
-  import 'swiper/dist/css/swiper.css'; // vue-awesome-swiper的样式表
-  import {swiper, swiperSlide} from 'vue-awesome-swiper';
   import ItemArticle from '../../common/component/ItemArticle';
   import {getArticleList, getBannerList} from './js/home';
   import {baseFunction} from '../../common/js/mixin'; // 【使用mixins】【2】 引入mixin
+  import Slide from '../../common/component/Slide';
 
   export default {
     mixins: [baseFunction], // 【使用mixins】【3】 使用mixin // 使用Toast组件【1】
@@ -125,26 +118,20 @@
       }
     },
     components: {
-      swiper, swiperSlide, ItemArticle
+      ItemArticle, Slide
     }
   };
 </script>
 
 <style scoped lang="scss">
   .wrapper {
-    width: 100%;
     .banner-wrapper {
-      .right {
-        display: none;
-      }
-      .left {
-        .my-swiper {
-          .my-slide {
-            img {
-              width: 100%;
-              min-height: 177px;
-            }
-          }
+      a {
+        text-decoration: none;
+        img {
+          display: block;
+          width: 100%;
+          min-height: 177px;
         }
       }
     }
