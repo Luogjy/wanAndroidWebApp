@@ -31,6 +31,12 @@ const mutations = {
   },
   [types.DEFAULT_ONE_NAV_DATA](state, defaultOneNavData) {
     state.defaultOneNavData = defaultOneNavData;
+  },
+  [types.PAGE_SCROLL_TOP](state, pageScrollTop) {
+    state.pageScrollTop = pageScrollTop;
+  },
+  [types.IS_SCROLL_BY_RECORD](state, isScrollByRecord) {
+    state.isScrollByRecord = isScrollByRecord;
   }
   // [types.THE_SEARCH_KEY](state, theSearchKey) {
   //   state.theSearchKey = theSearchKey;

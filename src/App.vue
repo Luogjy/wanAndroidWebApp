@@ -20,7 +20,7 @@
   import MyHeader from './common/component/MyHeader';
   import NavBar from './common/component/NavBar';
   import Discover from './common/component/Discover';
-  import {mapMutations} from 'vuex';
+  import {mapMutations, mapGetters} from 'vuex';
   import {appHeadFunction} from './common/js/mixin';
 
   export default {
@@ -39,7 +39,8 @@
     computed: {
       showNavBar() {
         return this.toShowNavBar ? 'nav-bar-enter' : 'nav-bar-exit';
-      }
+      },
+      ...mapGetters(['pageScrollTop', 'isScrollByRecord'])
     },
     mounted() {
       this.$nextTick(function () {
@@ -50,9 +51,13 @@
     },
     methods: {
       onScroll() {
+        // 记录每个页面滚动高度
+        let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        this.recordPageScrollTop(scrollTop);
+
         this.isScrollEvent = true;
         this.touchBottomListener(); // 触底监听
-        this.showHideNavBarByScrollEvent(); // 导航栏的交互
+        this.showHideNavBarByScrollEvent(scrollTop); // 导航栏的交互
       },
       onTouchStart(e) {
         this.isScrollEvent = false;
@@ -67,14 +72,39 @@
           }
         }, 20);
       },
-      showHideNavBarByScrollEvent() {
-        let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      showHideNavBarByScrollEvent(scrollTop) {
+        if (this.isScrollByRecord) {
+          this.setIsScrollByRecord(false);
+          return;
+        }
+
         // 有时候内容太少页面没有滚动的，所以用触摸去控制导航栏，如果只用触摸事件去控制的话抖动太厉害太容易导致导航栏被频繁控制
         this.toShowNavBar = this.preScrollTop > scrollTop;
+
         this.preScrollTop = scrollTop;
       },
+      // 记录页面的滚动高度
+      recordPageScrollTop(scrollTop) {
+        let obj = Object.assign({}, this.pageScrollTop);
+        if (this.$route.path === '/home') {
+          obj.home = scrollTop;
+          this.setPageScrollTop(obj);
+        }
+        if (this.$route.path === '/technologySystem') {
+          obj.technologySystem = scrollTop;
+          this.setPageScrollTop(obj);
+        }
+        if (this.$route.path === '/project') {
+          obj.project = scrollTop;
+          this.setPageScrollTop(obj);
+        }
+        if (this.$route.path === '/search') {
+          obj.search = scrollTop;
+          this.setPageScrollTop(obj);
+        }
+      },
       touchBottomListener() {
-        if (window.pageYOffset + window.innerHeight >= document.documentElement.scrollHeight) { // 滚动高度 + 可视高度 >= 文档高度
+        if (window.pageYOffset + window.innerHeight + 10 /* 加10避免由于小数导致永远大不过右边 */ >= document.documentElement.scrollHeight) { // 滚动高度 + 可视高度 >= 文档高度
           this.setTouchBottom(true);
         } else {
           this.setTouchBottom(false);
@@ -87,7 +117,9 @@
         this.isShowDiscoverDialog = false;
       },
       ...mapMutations({
-        setTouchBottom: 'TOUCH_BOTTOM'
+        setTouchBottom: 'TOUCH_BOTTOM',
+        setPageScrollTop: 'PAGE_SCROLL_TOP',
+        setIsScrollByRecord: 'IS_SCROLL_BY_RECORD'
       })
     },
     components: {

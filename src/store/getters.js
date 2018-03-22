@@ -14,4 +14,8 @@ export const defaultProjectChapter = state => state.defaultProjectChapter;
 
 export const defaultOneNavData = state => state.defaultOneNavData;
 
+export const pageScrollTop = state => state.pageScrollTop;
+
+export const isScrollByRecord = state => state.isScrollByRecord;
+
 // export const theSearchKey = state => state.theSearchKey;

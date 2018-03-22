@@ -26,15 +26,35 @@ export const baseFunction = { // 【使用mixins】【1】
     };
   },
   computed: {
-    ...mapGetters(['touchBottom', 'refresh'])
+    ...mapGetters(['touchBottom', 'refresh', 'pageScrollTop'])
   },
   activated() {
     this.pageActivated = true;
+    this.scrollByRecord();
   },
   deactivated() {
     this.pageActivated = false;
   },
   methods: {
+    // 页面根据记录回到之前滚动的高度
+    scrollByRecord() {
+      if (this.$route.path === '/home') {
+        this.setIsScrollByRecord(true);
+        window.scrollTo(0, this.pageScrollTop.home);
+      }
+      if (this.$route.path === '/technologySystem') {
+        this.setIsScrollByRecord(true);
+        window.scrollTo(0, this.pageScrollTop.technologySystem);
+      }
+      if (this.$route.path === '/project') {
+        this.setIsScrollByRecord(true);
+        window.scrollTo(0, this.pageScrollTop.project);
+      }
+      if (this.$route.path === '/search') {
+        this.setIsScrollByRecord(true);
+        window.scrollTo(0, this.pageScrollTop.search);
+      }
+    },
     // 触底加载更多
     _touchBottom(newValue, oldValue) {
       throw new Error('必须在methods重写_touchBottom函数，实现触底加载更多'); // 要求此函数必须重写，否则抛异常
@@ -62,7 +82,8 @@ export const baseFunction = { // 【使用mixins】【1】
       // 点击了头部刷新按钮
       setRefresh: 'REFRESH',
       // 主动调起的请求任务数，计数器加1或加-1
-      addLoading: 'LOADING'
+      addLoading: 'LOADING',
+      setIsScrollByRecord: 'IS_SCROLL_BY_RECORD'
     })
   },
   watch: {
