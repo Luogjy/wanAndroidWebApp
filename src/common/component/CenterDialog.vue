@@ -99,7 +99,7 @@
     }
     .mask {
       width: 100%;
-      height: 100%;
+      height: 150%;
       position: fixed;
       top: 0;
       background: black;

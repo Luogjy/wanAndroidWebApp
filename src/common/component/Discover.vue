@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div @click.stop="hideDiscover" class="maskTop" :class="showDiscover?'maskTop-enter':'maskTop-exit'"></div>
+    <div @click.stop="hideDiscover" class="mask-top" :class="showDiscover?'mask-top-enter':'mask-top-exit'"></div>
     <ul @click.stop="hideDiscover" class="item-wrapper"
         :class="showDiscover?'item-wrapper-enter':'item-wrapper-exit'">
       <li @click="clickNav">导航</li>
@@ -63,22 +63,22 @@
 
   .wrapper {
     width: 100%;
-    .maskTop {
+    .mask-top {
       width: 100%;
       height: $headHeight;
       position: fixed;
       top: 0;
       z-index: 99;
     }
-    .maskTop-enter {
+    .mask-top-enter {
       display: block;
     }
-    .maskTop-exit {
+    .mask-top-exit {
       display: none;
     }
     .mask-bottom {
       width: 100%;
-      height: 100%;
+      height: 150%;
       position: fixed;
       top: $headHeight;
       background: black;
