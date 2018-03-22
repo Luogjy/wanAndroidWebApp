@@ -28,32 +28,7 @@
     data() {
       return {
         articles: [],
-        banners: [],
-        // vue-awesome-swiper所有参数都写这里，所有的参数同 swiper 官方 api 参数
-        swiperOption: {
-          scrollbar: {
-            el: '.swiper-scrollbar'
-          },
-          speed: 300, // 划动时的切换速度，默认300毫秒
-          watchSlidesProgress: true,
-          loop: true,
-          autoplay: {
-            delay: 3000,
-            stopOnLastSlide: false,
-            disableOnInteraction: true
-          },
-          pagination: {
-            el: '.swiper-pagination'
-          },
-          on: {
-            progress: function (progress) {
-              // that.setSwiperProgress(progress);
-            },
-            slideChange: function () {
-              // that.setSwiperActiveIndex(this.activeIndex);
-            }
-          }
-        }
+        banners: []
       };
     },
     created() {

@@ -144,6 +144,7 @@
       },
       _initSlide() {
         this.slide = new BScroll(this.$refs.slide, {
+          eventPassthrough: 'vertical', // 纵向的滚动保留原生滚动
           scrollX: true,
           scrollY: false,
           momentum: false,
