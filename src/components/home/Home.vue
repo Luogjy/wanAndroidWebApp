@@ -4,7 +4,7 @@
     <toast :show-option="toastOption"/>
     <div ref="bannerWrapper" class="banner-wrapper">
       <slide v-if="banners.length">
-        <div :key="index" v-for="(item,index) in banners">
+        <div :key="item.url" v-for="(item) in banners">
           <a :href="item.url">
             <img :src="item.imagePath" alt="">
           </a>
@@ -12,7 +12,7 @@
       </slide>
     </div>
     <div>
-      <item-article :item="item" :key="index" v-for="(item,index) in articles"/>
+      <item-article :item="item" :key="item.title" v-for="(item) in articles"/>
     </div>
   </section>
 </template>

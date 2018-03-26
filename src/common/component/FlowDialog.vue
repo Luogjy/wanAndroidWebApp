@@ -1,7 +1,7 @@
 <template>
   <center-dialog :show-dialog="showDialog" :title="title" @userHideDialog="userHideDialog">
     <ul class="item-wrapper">
-      <li @click.stop="selectedItem({item,index})" :key="index" v-for="(item,index) in items"
+      <li @click.stop="selectedItem({item,index})" :key="item.name" v-for="(item,index) in items"
           :class="items.selectedPosition===index?'selected':''">
         {{item.name}}
       </li>

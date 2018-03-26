@@ -12,7 +12,7 @@
       <div class="hot-key-wrapper">
         <h1>大家都在搜</h1>
         <ul>
-          <li :key="index" v-for="(item,index) in hotKeys" @click="selectKey(item.name)">{{item.name}}</li>
+          <li :key="item.name" v-for="(item) in hotKeys" @click="selectKey(item.name)">{{item.name}}</li>
         </ul>
       </div>
 
@@ -20,12 +20,12 @@
         <h1>历史搜索</h1>
         <img src="../../common/img/clear.png" alt="" @click="clearHistory">
         <ul>
-          <li :key="index" v-for="(item,index) in historyKeys" @click="selectKey(item)">{{item}}</li>
+          <li :key="item" v-for="(item) in historyKeys" @click="selectKey(item)">{{item}}</li>
         </ul>
       </div>
 
       <div class="list">
-        <item-article :item="item" :key="index" v-for="(item,index) in articles"/>
+        <item-article :item="item" :key="item.title" v-for="(item) in articles"/>
       </div>
     </div>
 

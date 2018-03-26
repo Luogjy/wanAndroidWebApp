@@ -19,7 +19,7 @@
         <span class="author">作者：</span>
         <span class="author-name" :class="!canOpenAuthor?'cannot-open-author':''" @click.prevent="toAuthorPage">{{item.author}}</span>
         <div class="tags">
-          <div class="tag-wrapper" :key="index" v-for="(tag,index) in item.tags"
+          <div class="tag-wrapper" :key="tag.url" v-for="(tag) in item.tags"
                @click.prevent="clickTag(tag)">
             <span class="tag">{{tag.name}}</span>
           </div>

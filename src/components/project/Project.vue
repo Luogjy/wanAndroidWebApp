@@ -7,7 +7,7 @@
     </div>
 
     <div ref="listWrapper" class="list-wrapper">
-      <item-project :key="index" :item="item" v-for="(item,index) in projects"/>
+      <item-project :key="item.title" :item="item" v-for="(item) in projects"/>
     </div>
 
     <flow-dialog :show-dialog="toShowFlowDialog" @userHideDialog="userHideFlowDialog" @hideDialog="hideFlowDialog"

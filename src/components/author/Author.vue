@@ -7,7 +7,7 @@
     </div>
 
     <div ref="listWrapper" class="list-wrapper">
-      <item-article :can-open-author="false" :item="item" :key="index" v-for="(item,index) in articles"/>
+      <item-article :can-open-author="false" :item="item" :key="item.title" v-for="(item) in articles"/>
     </div>
 
   </section>

@@ -8,7 +8,7 @@
     </div>
 
     <div ref="articleWrapper" class="article-wrapper">
-      <item-article :can-open-chapter="false" :item="item" :key="index" v-for="(item,index) in articles"/>
+      <item-article :can-open-chapter="false" :item="item" :key="item.title" v-for="(item) in articles"/>
     </div>
 
     <flow-dialog :show-dialog="toShowFlowDialog" @userHideDialog="userHideFlowDialog" @hideDialog="hideFlowDialog"
