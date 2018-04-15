@@ -3,11 +3,8 @@
 
 感兴趣的同学随意fork或者给个star
 
-#### Note
-由于没有iPhone，暂时没有对iPhone(尤其是iPhoneX刘海和小黑条)进行针对适配。
-
 #### 技术栈：
-* 以Vue为框架基础，结合了Vue-router、Vuex、axios、ES6
+* 以Vue为框架，结合了Vue-router、Vuex、axios、ES6
 * 样式表使用了Sass预处理器
 * 跨域通过服务端代理解决，用nodejs、express、axios写的
 
@@ -15,13 +12,6 @@
 >地址：`http://luogjytest.top`
 
 这是个移动端的webApp，建议用手机浏览器打开。
-
-#### TODO
-* ~~异步路由，图片懒加载，gzip压缩~~
-* ~~对一些已知bug进行修复~~
-* 原网站在快速发展中，新功能不断添加，此项目开发期间会持续跟进
-* 可能会加入登录和注册功能
-* ~~对代码结构进一步优化ing...~~
 
 #### 效果图
 ![Alt text](shotcut/Screenshot1.jpg)
