@@ -14,8 +14,8 @@
 这是个移动端的webApp，建议用手机浏览器打开。
 
 #### 调试
-* 编译运行命令(先安装Nodejs)
-`npm run dev`
+* 编译运行命令(先安装Nodejs)  
+`npm run dev`  
 成功后显示 `Your application is running here: http://0.0.0.0:8080`
 * 电脑浏览器
 打开 `http://localhost:8080`即可，推荐使用Chrome浏览器调试
