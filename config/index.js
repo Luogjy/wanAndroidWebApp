@@ -8,8 +8,8 @@ module.exports = {
   dev: {
 
     // Paths
-    assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsSubDirectory: '',
+    assetsPublicPath: '',
     proxyTable: {},
 
     // Various Dev Server settings
@@ -50,15 +50,8 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
-    /*
-      【部署注意】
-      这是默认路径，打包后资源路径为，例如 <script type=text/javascript src=/static/js/app.50959d9f2e0af7708d4a.js></script>
-      部署时把打包得到的整个dist目录放到服务器根目录下
-      服务端执行文件访问静态资源设置为 app.use(express.static('../dist'));
-      服务端项目也是把整个项目放到服务器根目录下
-     */
-    assetsPublicPath: '/',
+    assetsSubDirectory: '',
+    assetsPublicPath: '',
 
     /**
      * Source Maps
