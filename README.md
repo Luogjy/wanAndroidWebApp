@@ -29,7 +29,7 @@
 3. 在cordovaApp目录下，执行`cordova platform add android`
 4. 在wanAndroidWebApp项目下，执行`npm run build`（打包webAPP）
 5. 把生成的dist目录下的所有文件替换掉\cordovaApp\www目录下的所有文件
-6. 在cordovaApp目录下，执行`cordova build android`（生成apk安装文件，在\cordovaApp\platforms\android\app\build\outputs\apk\debug）
+6. 在cordovaApp目录下，执行`cordova build android`（需要翻墙。生成apk安装文件，在\cordovaApp\platforms\android\app\build\outputs\apk\debug）
 
 #### 效果图
 ![Alt text](shotcut/Screenshot1.jpg)
