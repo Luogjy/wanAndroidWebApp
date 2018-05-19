@@ -14,13 +14,22 @@
 这是个移动端的webApp，建议用手机浏览器打开。
 
 #### 调试
-* 编译运行命令(先安装Nodejs)  
-`npm run dev`  
+* 编译运行命令(先安装Nodejs)
+`npm run dev`
 成功后显示 `Your application is running here: http://0.0.0.0:8080`
 * 电脑浏览器
 打开 `http://localhost:8080`即可，推荐使用Chrome浏览器调试
 * 手机浏览器
 保证跟电脑同一局域网内，打开`http://你的电脑ip:8080`
+
+#### 使用Cordova把项目打包成apk安装包
+0. 使用cordova分支的代码（已经参考https://www.jianshu.com/p/25d797b983cd 配置好了所需代码）
+1. 执行`npm install -g cordova`（安装Cordova）
+2. 在某文件夹下，执行`cordova create cordovaApp com.cordova.testapp`（创建Cordova项目，生成cordovaApp目录）
+3. 在cordovaApp目录下，执行`cordova platform add android`
+4. 在wanAndroidWebApp项目下，执行`npm run build`（打包webAPP）
+5. 把生成的dist目录下的所有文件替换掉\cordovaApp\www目录下的所有文件
+6. 在cordovaApp目录下，执行`cordova build android`（生成apk安装文件，在\cordovaApp\platforms\android\app\build\outputs\apk\debug）
 
 #### 效果图
 ![Alt text](shotcut/Screenshot1.jpg)
