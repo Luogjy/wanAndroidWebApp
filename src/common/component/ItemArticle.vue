@@ -122,8 +122,8 @@
     width: 100%;
     padding-left: 5px;
     padding-right: 5px;
-    margin-top: 6px;
-    margin-bottom: 6px;
+    margin-top: $itemArticleMarginTop;
+    margin-bottom: $itemArticleMarginBottom;
     .content {
       height: 100px;
       font-size: 12px;

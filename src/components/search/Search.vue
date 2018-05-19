@@ -25,7 +25,7 @@
       </div>
 
       <div class="list">
-        <item-article :item="item" :key="item.title" v-for="(item) in articles"/>
+        <item-article class="item" :item="item" :key="item.title" v-for="(item) in articles"/>
       </div>
     </div>
 
@@ -56,7 +56,6 @@
       this.historyKeys = getHistoryKeys();
     },
     mounted() {
-      console.log(this.$refs.content.getBoundingClientRect().top);
       this.initToastTop(this.$refs.content.getBoundingClientRect().top);
     },
     methods: {
@@ -260,6 +259,10 @@
       }
       .list {
         background: #F5F5F5;
+        .item {
+          margin-top: $itemArticleMarginTop;
+          margin-bottom: $itemArticleMarginBottom;
+        }
       }
     }
 

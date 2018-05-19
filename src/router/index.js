@@ -48,6 +48,7 @@ const LoginRegister = (resolve) => {
 };
 
 export default new Router({
+  mode: 'history', // 默认是hash
   routes: [
     {
       path: '/',
