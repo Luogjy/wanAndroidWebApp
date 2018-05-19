@@ -31,6 +31,8 @@
 5. 把生成的dist目录下的所有文件替换掉\cordovaApp\www目录下的所有文件
 6. 在cordovaApp目录下，执行`cordova build android`（需要翻墙。生成apk安装文件，在\cordovaApp\platforms\android\app\build\outputs\apk\debug）
 
+> [体验apk安装包](https://github.com/Luogjy/wanAndroidWebApp/tree/master/apk)
+
 #### 效果图
 ![Alt text](shotcut/Screenshot1.jpg)
 ![Alt text](shotcut/lu1.gif)
