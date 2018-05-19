@@ -48,7 +48,8 @@ const LoginRegister = (resolve) => {
 };
 
 export default new Router({
-  mode: 'history', // 默认是hash
+  // 【使用Cordova把vue项目打包成apk安装包】
+  // mode: 'history', // 默认是hash。【使用Cordova打包为apk时mode不能设置为history，否则路由跳转有问题，使用hash可以】
   routes: [
     {
       path: '/',

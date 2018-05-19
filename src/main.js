@@ -14,9 +14,17 @@ Vue.use(VueLazyLoad, {
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  store,
-  router,
-  render: h => h(App)
-});
+
+// 【使用Cordova把vue项目打包成apk安装包】
+// 把webAPP打包成apk项目，参考 https://www.jianshu.com/p/25d797b983cd 或 文档【教你用Cordova打包Vue项目 - 简书.mhtml】
+// 当Cordova完全加载好deviceready事件会触发。这个事件对每一个应用程序都是必须的。他是Cordova设备API准备好并可以访问的信号。
+// http://cordova.axuer.com/docs/zh-cn/latest/cordova/events/events.html#deviceready
+document.addEventListener('deviceready', function () {
+  new Vue({
+    el: '#app',
+    store,
+    router,
+    render: h => h(App)
+  });
+  window.navigator.splashscreen.hide();
+}, false);
