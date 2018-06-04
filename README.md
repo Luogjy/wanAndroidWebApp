@@ -9,7 +9,9 @@
 * 跨域通过服务端代理解决，用nodejs、express、axios写的
 
 #### 项目链接
->地址：`http://luogjytest.top`
+>~~地址：`http://luogjytest.top`~~ 网站被恶意植入广告了，暂时关掉了，还是得上HTTPS
+![Alt text](shotcut/20180604220854.png)
+
 
 这是个移动端的webApp，建议用手机浏览器打开。
 
